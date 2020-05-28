@@ -17,10 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/admin', 'Users\AdminController@index')->name('admin')->middleware('admin');
+Route::get('/admin', 'Users\Admin\AdminController@index')->name('admin')->middleware('admin');
 Route::get('/auditor', 'Users\AuditorController@index')->name('auditor')->middleware('auditor');
 Route::get('/kontraktor', 'Users\KontraktorController@index')->name('kontraktor')->middleware('kontraktor');
 Route::get('/manajer', 'Users\ManajerController@index')->name('manajer')->middleware('manajer');
 Route::get('/supervisor', 'Users\SupervisorController@index')->name('supervisor')->middleware('supervisor');
 
 Route::get('/home', 'Users\AdminController@index')->name('home');
+// Route::get('/UserAuditor', 'Users\AdminController@UserAuditor')->name('user');
+Route::resource('UserAuditor', 'Users\Admin\AuditorUsersController')->except(['create']);
