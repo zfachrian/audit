@@ -8,10 +8,11 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Data {{ $title }}</h3>
+            <h3 class="card-title">Data {{ $title }}</h3>
                 <div class="float-right">
+                    <a href="/user/create/{{$role}}" class="btn btn-primary">Tambah {{ $title }}</a>
                     <!-- add modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Contributor</button>
+                    {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Auditor</button> --}}
                 </div>
             </div>
             <div class="card-body">
@@ -48,17 +49,15 @@
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->phone }}</td>
                             <td>
-                                <a href="{{ route('UserAuditor.edit', $item->id ) }}" class="btn btn-success">Edit</a>
+                                <a href="{{ route('user.edit', $item->id ) }}" class="btn btn-success">Edit</a>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-delete-modal-lg{{$item->id}}">Delete</button>
-                                {{-- <form action="{{ route('panel.contributor.destroy',$item->id) }}">
-                                    <button class="btn btn-danger" onclick="return confirm('Apa anda yakin?')">Delete</button>
-                                </form> --}}
+                           
                             <!-- add modal -->
                             <div class="modal fade bd-delete-modal-lg{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Delete Contributor</h5>
+                                            <h5 class="modal-title">Delete Auditor</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
@@ -67,7 +66,7 @@
                                                 <h5> Apakah anda yakin untuk menghapus {{$item->name}} ?</h5>
                                             </div>
                                             <div class="modal-footer">
-                                                {{-- <form method="post" action="{{ route('panel.contributor.destroy', $item->id ) }}" class="d-inline"> --}}
+                                                <form method="post" action="{{ route('user.destroy', $item->id ) }}" class="d-inline">
                                                     @method('delete') @csrf
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>

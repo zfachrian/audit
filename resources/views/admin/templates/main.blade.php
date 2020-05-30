@@ -84,25 +84,31 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="/user" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Admin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/userSupervisor" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Supervisor</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="userManajer" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manajer</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/UserAuditor" class="nav-link">
+                <a href="/userAuditor" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Auditor</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="/UserKontraktor" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Kontraktor</p>
                 </a>
