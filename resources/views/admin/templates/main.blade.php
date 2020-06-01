@@ -57,7 +57,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
               Dashboard
@@ -108,9 +108,38 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/UserKontraktor" class="nav-link">
+                <a href="/userKontraktor" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Kontraktor</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview menu">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Audit Menu
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/Audit" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Audit</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/Audit" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Histori Audit</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../forms/advanced.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Jadwal</p>
                 </a>
               </li>
             </ul>
@@ -147,7 +176,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <!-- {{-- @foreach ($path as $item => $value)
-                <li class="breadcrumb-item @if($loop->last) active @endif"> <a style="text-transform: capitalize;">{{ $value }}</a></li>
+                <li class="breadcrumb-item @if($loop->last) @endif"> <a style="text-transform: capitalize;">{{ $value }}</a></li>
               @endforeach --}} -->
             </ol>
           </div><!-- /.col -->
