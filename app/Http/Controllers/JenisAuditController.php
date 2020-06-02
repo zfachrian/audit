@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Audit;
+use App\Model\JenisAudit;
 use Illuminate\Http\Request;
 
-class AuditController extends Controller
+class JenisAuditController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,16 +14,7 @@ class AuditController extends Controller
      */
     public function index()
     {
-        $title = "Audit";
-        // $data = Audit::get();
-        return view('admin.audit.index', compact('title'));
-    }
-
-    public function audit()
-    {
-        $title = "Audit";
-        // $data = Audit::get();
-        return view('admin.audit.sumary', compact('title'));
+        //
     }
 
     /**
@@ -50,23 +41,21 @@ class AuditController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Audit  $audit
+     * @param  \App\Model\JenisAudit  $jenisAudit
      * @return \Illuminate\Http\Response
      */
-    public function show(Audit $audit)
+    public function show(JenisAudit $jenisAudit)
     {
-        $title = "Audit";
-        // $data = Audit::get();
-        return view('admin.audit.soal', compact('title'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Audit  $audit
+     * @param  \App\Model\JenisAudit  $jenisAudit
      * @return \Illuminate\Http\Response
      */
-    public function edit(Audit $audit)
+    public function edit(JenisAudit $jenisAudit)
     {
         //
     }
@@ -75,10 +64,10 @@ class AuditController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Audit  $audit
+     * @param  \App\Model\JenisAudit  $jenisAudit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Audit $audit)
+    public function update(Request $request, JenisAudit $jenisAudit)
     {
         //
     }
@@ -86,10 +75,10 @@ class AuditController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Audit  $audit
+     * @param  \App\Model\JenisAudit  $jenisAudit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Audit $audit)
+    public function destroy(JenisAudit $jenisAudit)
     {
         //
     }
