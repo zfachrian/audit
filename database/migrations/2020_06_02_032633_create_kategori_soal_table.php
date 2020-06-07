@@ -15,7 +15,7 @@ class CreateKategoriSoalTable extends Migration
     {
         Schema::create('kategori_soal', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('jenis_id')->references('id')->on('jenis_audit');
+            $table->integer('jenis_id');
             $table->text('kategori_soal');
             $table->integer('total_diperiksa')->nullable();
             $table->integer('total_tdksesuai')->nullable();

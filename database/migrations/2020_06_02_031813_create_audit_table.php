@@ -19,8 +19,7 @@ class CreateAuditTable extends Migration
             $table->text('lingkup_audit');
             $table->integer('auditor');
             $table->timestamp('jadwal');
-            $table->foreign('jenis_id')->references('id')->on('jenis_audit');
-            // $table->integer('jenis_id', 10)->unsigned;
+            $table->integer('jenis_id');
             $table->timestamps();
         });
     }

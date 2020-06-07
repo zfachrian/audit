@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Model\Audit;
+use App\Model\JenisAudit;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AuditController extends Controller
 {
@@ -14,9 +17,20 @@ class AuditController extends Controller
      */
     public function index()
     {
-        $title = "Audit";
-        // $data = Audit::get();
-        return view('admin.audit.index', compact('title'));
+        $title  = "Data Audit";
+        $data   = Audit::get();
+        // echo json_encode($data);die();
+
+        $diaudit  = Audit::select('name')
+                ->join('users as a', 'audit.diaudit', '=', 'a.id')
+                ->get();
+
+        $auditor  = Audit::select('name')
+                ->join('users as a', 'audit.auditor', '=', 'a.id')
+                ->get();
+    
+        // echo json_encode($auditor);die();
+        return view('admin.audit.index', compact('title', 'data', 'diaudit', 'auditor'));
     }
 
     public function audit()
@@ -33,7 +47,11 @@ class AuditController extends Controller
      */
     public function create()
     {
-        //
+        $title = "Tambah Data Audit";
+        $user = User::where('role', 3)->get();
+        $data = JenisAudit::get();
+        // $data = Audit::get();
+        return view('admin.audit.tambah', compact('title', 'user', 'data'));
     }
 
     /**
@@ -44,7 +62,24 @@ class AuditController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        // echo json_encode($request);die();
+        $request->validate([
+            'jenis'               =>'required',
+            'diaudit'             =>'required',
+            'lingkup'             =>'required',
+            'jadwal'              =>'required'
+        ]);
+
+        audit::create([
+                'jenis_id'        => $request->jenis,
+                'diaudit'         => $request->diaudit,
+                'lingkup_audit'   => $request->lingkup,
+                'auditor'         => $request->auditor,
+                'jadwal'          => $request->jadwal
+        ]);
+
+        return redirect('/AuditSumary')->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
