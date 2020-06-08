@@ -21,16 +21,17 @@ class AuditController extends Controller
         $data   = Audit::get();
         // echo json_encode($data);die();
 
-        $diaudit  = Audit::select('name')
+        $diaudit  = Audit::select('audit.*', 'a.name as diaudit', 'a2.name as auditor'  )
                 ->join('users as a', 'audit.diaudit', '=', 'a.id')
+                ->join('users as a2', 'audit.auditor', '=', 'a2.id')
                 ->get();
 
-        $auditor  = Audit::select('name')
-                ->join('users as a', 'audit.auditor', '=', 'a.id')
-                ->get();
-    
-        // echo json_encode($auditor);die();
-        return view('admin.audit.index', compact('title', 'data', 'diaudit', 'auditor'));
+        // $auditor  = Audit::select('name')
+        //         ->join('users as a', 'audit.auditor', '=', 'a.id')
+        //         ->get();
+
+        // echo json_encode($diaudit);die();
+        return view('admin.audit.index', compact('title', 'data', 'diaudit'));
     }
 
     public function audit()

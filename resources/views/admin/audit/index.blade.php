@@ -45,7 +45,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $item)
+                        @foreach ($diaudit as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->diaudit }}</td>
@@ -57,7 +57,7 @@
                             <td>
                                 <a href="{{ route('user.edit', $item->id ) }}" class="btn btn-success">Edit</a>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-delete-modal-lg{{$item->id}}">Delete</button>
-                           
+
                             <!-- add modal -->
                             <div class="modal fade bd-delete-modal-lg{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
