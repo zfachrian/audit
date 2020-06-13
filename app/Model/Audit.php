@@ -9,7 +9,7 @@ class Audit extends Model
     protected $table = 'audit';
 
     protected $fillable = [
-        'diaudit', 'lingkup_audit', 'auditor', 'jadwal', 'jenis_id'
+        'diaudit', 'lingkup_audit', 'jenis_usaha', 'tujuan', 'auditor', 'jadwal', 'jenis_id'
     ];
 
     

@@ -33,5 +33,5 @@ Route::get('/userManajer', 'UserController@manajer');
 Route::get('/userSupervisor', 'UserController@supervisor');
 
 Route::resource('/audit', 'AuditController');
-Route::get('/AuditSumary', 'AuditController@audit');
-Route::get('/AuditKategori', 'AuditController@show');
+Route::get('/AuditSumary/{id}', 'AuditController@audit');
+Route::get('/AuditKategori/{kategori}', 'AuditController@soal');

@@ -28,7 +28,7 @@
             <form role="form">
                 <div class="card-body">
                     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <div class="dataTables_length" id="example1_length">
                                     <label>Show 
@@ -48,13 +48,16 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="row">
                             <div class="col-sm-12">
                                 <table id="tabelInput" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                                     <thead>
                                         <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="2" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                                                No
+                                            </th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
                                                 Topik
                                             </th>
                                             <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
@@ -73,22 +76,24 @@
                                     </thead>
                                         <tbody>
                                             <tr role="row" class="odd">
-                                                <td colspan="6" style="background-color:yellow;">Kebersihan Tempat Kerja</td>
+                                                <td colspan="6" style="background-color:yellow;">{{$data->kategori_soal}}</td>
                                             </tr>
-                                            <tr role="row" class="odd">
-                                                <td tabindex="0" class="sorting_1">1</td>
-                                                <td>Kebersihan Tempat Kerja</td>
-                                                <td>
-                                                    <input type="number" class="form-control" id="diperiksa" onInput="persentase('diperiksa', 'tdksesuai', 'persen')"  placeholder="jumlah diperiksa" value="0">
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control" id="tdksesuai" onInput="persentase('diperiksa', 'tdksesuai', 'persen')" placeholder="jumlah tidak sesuai" value="0">
-                                                </td>
-                                                <td id="persen">0%</td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="keterangan" placeholder="keterangan">
-                                                </td>
-                                            </tr>
+                                            @foreach ($soal as $item)    
+                                                <tr role="row" class="odd">
+                                                    <td tabindex="0" class="sorting_1">{{$loop->iteration}}</td>
+                                                    <td>{{$item->topik}}</td>
+                                                    <td>
+                                                        <input type="number" class="form-control" id="diperiksa" onInput="persentase('diperiksa', 'tdksesuai', 'persen')"  placeholder="jumlah diperiksa" value="{{$item->total_diperiksa}}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" class="form-control" id="tdksesuai" onInput="persentase('diperiksa', 'tdksesuai', 'persen')" placeholder="jumlah tidak sesuai" value="{{$item->total_tdksesuai}}">
+                                                    </td>
+                                                    <td id="persen">{{$item->persentase}}%</td>
+                                                    <td>
+                                                        <input type="text" class="form-control" id="keterangan" placeholder="keterangan">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                             
                                         </tbody>
                                     <tfoot>

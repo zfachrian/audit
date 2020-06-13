@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Model\Audit;
 use App\Model\JenisAudit;
+use App\Model\Kategori;
+use App\Model\Soal;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -21,24 +23,36 @@ class AuditController extends Controller
         $data   = Audit::get();
         // echo json_encode($data);die();
 
-        $diaudit  = Audit::select('audit.*', 'a.name as diaudit', 'a2.name as auditor'  )
+        $diaudit  = Audit::select('audit.*', 'a.name as diaudit', 'a2.name as auditor', 'b.jenis_audit as jenis_audit'  )
                 ->join('users as a', 'audit.diaudit', '=', 'a.id')
                 ->join('users as a2', 'audit.auditor', '=', 'a2.id')
+                ->join('jenis_audit as b', 'audit.jenis_id', '=', 'b.id')
                 ->get();
 
         // $auditor  = Audit::select('name')
         //         ->join('users as a', 'audit.auditor', '=', 'a.id')
         //         ->get();
-
+        
         // echo json_encode($diaudit);die();
         return view('admin.audit.index', compact('title', 'data', 'diaudit'));
     }
-
-    public function audit()
+    
+    public function audit($id)
+    {
+        $title = "Audit - List Kategori Audit";
+        $data = Audit::find($id);
+        // dd($data);
+        $kategori = kategori::where('jenis_id',$data->jenis_id )->get();
+        return view('admin.audit.sumary', compact('title', 'data', 'kategori'));
+    }
+    
+    public function soal($kategori)
     {
         $title = "Audit";
-        // $data = Audit::get();
-        return view('admin.audit.sumary', compact('title'));
+        $data = Kategori::find($kategori);
+        $soal = Soal::where('kategori_id', $kategori)->get();
+        // dd($soal);
+        return view('admin.audit.soal', compact('title', 'data', 'soal'));
     }
 
     /**
@@ -69,6 +83,8 @@ class AuditController extends Controller
             'jenis'               =>'required',
             'diaudit'             =>'required',
             'lingkup'             =>'required',
+            'jenis_usaha'         =>'required',
+            'tujuan'              =>'required',
             'jadwal'              =>'required'
         ]);
 
@@ -76,6 +92,8 @@ class AuditController extends Controller
                 'jenis_id'        => $request->jenis,
                 'diaudit'         => $request->diaudit,
                 'lingkup_audit'   => $request->lingkup,
+                'jenis_usaha'     => $request->jenis_usaha,
+                'tujuan'          => $request->tujuan,
                 'auditor'         => $request->auditor,
                 'jadwal'          => $request->jadwal
         ]);
@@ -92,7 +110,7 @@ class AuditController extends Controller
     public function show(Audit $audit)
     {
         $title = "Audit";
-        // $data = Audit::get();
+        $data = Audit::get();
         return view('admin.audit.soal', compact('title'));
     }
 
@@ -103,8 +121,13 @@ class AuditController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Audit $audit)
-    {
-        //
+     {
+        // echo json_encode($audit);die();
+        $title = "Edit Data Audit";
+        $user = User::where('role', 3)->get();
+        $data = JenisAudit::get();
+        // $data = Audit::get();
+        return view('admin.audit.edit', compact('title', 'user', 'data', 'audit'));
     }
 
     /**
@@ -116,7 +139,27 @@ class AuditController extends Controller
      */
     public function update(Request $request, Audit $audit)
     {
-        //
+        // dd($audit->id);
+          $request->validate([
+            'jenis'               =>'required',
+            'diaudit'             =>'required',
+            'lingkup'             =>'required',
+            'jenis_usaha'         =>'required',
+            'tujuan'              =>'required',
+            'jadwal'              =>'required'
+        ]);
+
+        audit::where('id', $audit->id)->Update([
+                'jenis_id'        => $request->jenis,
+                'diaudit'         => $request->diaudit,
+                'lingkup_audit'   => $request->lingkup,
+                'jenis_usaha'     => $request->jenis_usaha,
+                'tujuan'          => $request->tujuan,
+                'auditor'         => $request->auditor,
+                'jadwal'          => $request->jadwal
+        ]);
+
+        return redirect('/audit')->with('success', 'Data berhasil diupdate!');
     }
 
     /**
@@ -127,6 +170,7 @@ class AuditController extends Controller
      */
     public function destroy(Audit $audit)
     {
-        //
+        audit::destroy($audit->id);
+        return redirect('/audit')->with('danger', 'Data Berhasil Dihapus');
     }
 }

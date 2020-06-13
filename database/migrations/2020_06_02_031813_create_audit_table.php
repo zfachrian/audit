@@ -17,6 +17,8 @@ class CreateAuditTable extends Migration
             $table->increments('id');
             $table->integer('diaudit');
             $table->text('lingkup_audit');
+            $table->text('jenis_usaha');
+            $table->text('tujuan');
             $table->integer('auditor');
             $table->timestamp('jadwal');
             $table->integer('jenis_id');

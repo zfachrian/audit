@@ -22,6 +22,11 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                @if (session('danger'))
+                    <div class="alert alert-danger">
+                        {{ session('danger') }}
+                    </div>
+                @endif
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -31,10 +36,11 @@
                         </ul>
                     </div>
                 @endif
-                <table id="table" class="table table-bordered table-striped">
+                <table id="table" class="table table-bordered table-striped" style="max-width: 100%">
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Jenis Audit</th>
                             <th>Perusahaan di audit</th>
                             <th>Jenis Usaha</th>
                             <th>Lingkup Audit</th>
@@ -48,14 +54,16 @@
                         @foreach ($diaudit as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->jenis_audit }}</td>
                             <td>{{ $item->diaudit }}</td>
-                            <td>-</td>
+                            <td>{{ $item->jenis_usaha }}</td>
                             <td>{{ $item->lingkup_audit }}</td>
                             <td>{{ $item->jadwal }}</td>
-                            <td>-</td>
+                            <td>{{ $item->tujuan }}</td>
                             <td>{{ $item->auditor }}</td>
-                            <td>
-                                <a href="{{ route('user.edit', $item->id ) }}" class="btn btn-success">Edit</a>
+                            <td style="width: 25%">
+                                <a href="/AuditSumary/{{$item->id}}" class="btn btn-primary">Audit</a>
+                                <a href="{{ route('audit.edit', $item->id ) }}" class="btn btn-success">Edit</a>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-delete-modal-lg{{$item->id}}">Delete</button>
 
                             <!-- add modal -->
@@ -69,10 +77,10 @@
                                             </button>
                                         </div>
                                             <div class="modal-body">
-                                                <h5> Apakah anda yakin untuk menghapus {{$item->id}} ?</h5>
+                                                <h5> Apakah anda yakin untuk menghapus data audit perusahaan "{{$item->diaudit}}" ?</h5>
                                             </div>
                                             <div class="modal-footer">
-                                                <form method="post" action="{{ route('user.destroy', $item->id ) }}" class="d-inline">
+                                                <form method="post" action="{{ route('audit.destroy', $item->id ) }}" class="d-inline">
                                                     @method('delete') @csrf
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
@@ -88,6 +96,7 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
+                            <th>Jenis Audit</th>
                             <th>Perusahaan di audit</th>
                             <th>Jenis Usaha</th>
                             <th>Lingkup Audit</th>

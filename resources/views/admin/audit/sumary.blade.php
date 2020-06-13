@@ -31,7 +31,7 @@
             <div class="card-body">
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
-                        <div class="col-sm-12 col-md-6">
+                        {{-- <div class="col-sm-12 col-md-6">
                             <div class="dataTables_length" id="example1_length">
                                 <label>Show 
                                     <select name="example1_length" aria-controls="example1" class="custom-select custom-select-sm form-control form-control-sm">
@@ -49,7 +49,7 @@
                                     <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
@@ -77,16 +77,18 @@
                                     </tr>
                                 </thead>
                                     <tbody>
-                                        <tr role="row" class="odd">
-                                            <td tabindex="0" class="sorting_1">1</td>
-                                            <td>Kebersihan Tempat Kerja</td>
-                                            <td>10</td>
-                                            <td>4</td>
-                                            <td id="hasil">60%</td>
-                                            <td>
-                                                <a href="/AuditKategori" class="btn btn-primary">Audit Kategori</a>
-                                            </td>
-                                        </tr>
+                                        @foreach ($kategori as $item)    
+                                            <tr role="row" class="odd">
+                                                <td tabindex="0" class="sorting_1">{{ $loop->iteration }}</td>
+                                                <td>{{$item->kategori_soal}}</td>
+                                                <td>{{$item->total_diperiksa}}</td>
+                                                <td>{{$item->total_tdksesuai}}</td>
+                                                <td id="hasil">{{$item->presentase}}</td>
+                                                <td>
+                                                <a href="/AuditKategori/{{$item->id}}" class="btn btn-primary">Audit Kategori</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 <tfoot>
                                     <tr>
