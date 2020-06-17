@@ -2,15 +2,19 @@
 @section('title') Dashboard @endsection
 @section('style')@endsection
 @section('script')
+
+@foreach ($soal as $item)
 <script type="text/javascript">
-    function persentase(diperiksa, tdksesuai, persen) {
-        var x = document.getElementById(diperiksa).value;
-        var y = document.getElementById(tdksesuai).value;
-        
-        var hasil = (parseFloat(x) - parseFloat(y)) / parseFloat(x) * 100; 
-        document.getElementById(persen).innerHTML = hasil + "%";
+    function persentase(diperiksa{{$loop->iteration}}, tdksesuai{{$loop->iteration}}, persen{{$loop->iteration}}) {
+        var x = document.getElementById(diperiksa{{$loop->iteration}}).value;
+        var y = document.getElementById(tdksesuai{{$loop->iteration}}).value;
+
+        var hasil = (parseFloat(x) - parseFloat(y)) / parseFloat(x) * 100;
+        document.getElementById(persen{{$loop->iteration}}).innerHTML = hasil + "%";
     }
 </script>
+@endforeach
+
 @endsection
 
 
@@ -31,7 +35,7 @@
                         {{-- <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <div class="dataTables_length" id="example1_length">
-                                    <label>Show 
+                                    <label>Show
                                         <select name="example1_length" aria-controls="example1" class="custom-select custom-select-sm form-control form-control-sm">
                                             <option value="10">10</option>
                                             <option value="25">25</option>
@@ -71,34 +75,34 @@
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
                                                 Keterangan
-                                            </th>                                        
+                                            </th>
                                         </tr>
                                     </thead>
                                         <tbody>
                                             <tr role="row" class="odd">
                                                 <td colspan="6" style="background-color:yellow;">{{$data->kategori_soal}}</td>
                                             </tr>
-                                            @foreach ($soal as $item)    
+                                            @foreach ($soal as $item)
                                                 <tr role="row" class="odd">
                                                     <td tabindex="0" class="sorting_1">{{$loop->iteration}}</td>
                                                     <td>{{$item->topik}}</td>
                                                     <td>
-                                                        <input type="number" class="form-control" id="diperiksa" onInput="persentase('diperiksa', 'tdksesuai', 'persen')"  placeholder="jumlah diperiksa" value="{{$item->total_diperiksa}}">
+                                                        <input type="number" class="form-control" id="diperiksa{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')"  placeholder="jumlah diperiksa" value="{{$item->total_diperiksa}}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" class="form-control" id="tdksesuai" onInput="persentase('diperiksa', 'tdksesuai', 'persen')" placeholder="jumlah tidak sesuai" value="{{$item->total_tdksesuai}}">
+                                                        <input type="number" class="form-control" id="tdksesuai{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')" placeholder="jumlah tidak sesuai" value="{{$item->total_tdksesuai}}">
                                                     </td>
-                                                    <td id="persen">{{$item->persentase}}%</td>
+                                                    <td id="persen{{$loop->iteration}}">{{$item->persentase}}%</td>
                                                     <td>
-                                                        <input type="text" class="form-control" id="keterangan" placeholder="keterangan">
+                                                        <input type="text" class="form-control" id="keterangan{{$loop->iteration}}" placeholder="keterangan">
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                            
+
                                         </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>                                        
+                                            <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>
                                             <th rowspan="1" colspan="2">60% (Good)</th>
                                         </tr>
                                     </tfoot>
@@ -115,6 +119,6 @@
         </div><!-- /.card -->
     </div>
 
-    
+
 @endsection
 
