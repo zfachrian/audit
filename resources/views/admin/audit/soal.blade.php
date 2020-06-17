@@ -10,7 +10,8 @@
         var y = document.getElementById(tdksesuai{{$loop->iteration}}).value;
 
         var hasil = (parseFloat(x) - parseFloat(y)) / parseFloat(x) * 100;
-        document.getElementById(persen{{$loop->iteration}}).innerHTML = hasil + "%";
+        console.log(hasil);
+        document.getElementById(persen{{$loop->iteration}}).value = hasil;
     }
 </script>
 @endforeach
@@ -87,14 +88,16 @@
                                                     <td tabindex="0" class="sorting_1">{{$loop->iteration}}</td>
                                                     <td>{{$item->topik}}</td>
                                                     <td>
-                                                        <input type="number" class="form-control" id="diperiksa{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')"  placeholder="jumlah diperiksa" value="{{$item->total_diperiksa}}">
+                                                        <input type="number" class="form-control" name="diperiksa{{$loop->iteration}}" id="diperiksa{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')"  placeholder="jumlah diperiksa" value="{{$item->total_diperiksa}}">
                                                     </td>
                                                     <td>
-                                                        <input type="number" class="form-control" id="tdksesuai{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')" placeholder="jumlah tidak sesuai" value="{{$item->total_tdksesuai}}">
+                                                        <input type="number" class="form-control" name="tdksesuai{{$loop->iteration}}" id="tdksesuai{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')" placeholder="jumlah tidak sesuai" value="{{$item->total_tdksesuai}}">
                                                     </td>
-                                                    <td id="persen{{$loop->iteration}}">{{$item->persentase}}%</td>
                                                     <td>
-                                                        <input type="text" class="form-control" id="keterangan{{$loop->iteration}}" placeholder="keterangan">
+                                                        <input disabled name="persen{{$loop->iteration}}" id="persen{{$loop->iteration}}" value="{{$item->persentase}}" >%
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="keterangan{{$loop->iteration}}" id="keterangan{{$loop->iteration}}" placeholder="keterangan">
                                                     </td>
                                                 </tr>
                                             @endforeach
