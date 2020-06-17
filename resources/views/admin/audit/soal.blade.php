@@ -12,6 +12,17 @@
         var hasil = (parseFloat(x) - parseFloat(y)) / parseFloat(x) * 100;
         console.log(hasil);
         document.getElementById(persen{{$loop->iteration}}).value = hasil;
+
+        let persentaseCount = 0;
+        let persentaseAmount = 0;
+        let total = 0;
+        $('.persentase-input').each(function(){
+            persentaseCount++;
+            persentaseAmount += parseFloat($(this).val());
+        });
+
+        total = persentaseAmount/persentaseCount;
+        $('.total-persen').val(total);
     }
 </script>
 @endforeach
@@ -94,7 +105,7 @@
                                                         <input type="number" class="form-control" name="tdksesuai{{$loop->iteration}}" id="tdksesuai{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')" placeholder="jumlah tidak sesuai" value="{{$item->total_tdksesuai}}">
                                                     </td>
                                                     <td>
-                                                        <input disabled name="persen{{$loop->iteration}}" id="persen{{$loop->iteration}}" value="{{$item->persentase}}" >%
+                                                        <input disabled name="persen{{$loop->iteration}}" id="persen{{$loop->iteration}}" value="{{$item->persentase}}" class="persentase-input" >%
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control" name="keterangan{{$loop->iteration}}" id="keterangan{{$loop->iteration}}" placeholder="keterangan">
@@ -106,7 +117,7 @@
                                     <tfoot>
                                         <tr>
                                             <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>
-                                            <th rowspan="1" colspan="2">60% (Good)</th>
+                                            <th rowspan="1" colspan="2"><input type="number" readonly value="0" class="total-persen" />%</th>
                                         </tr>
                                     </tfoot>
                                 </table>
