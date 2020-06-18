@@ -41,7 +41,9 @@
                     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Auditor</button> --}}
                 </div>
             </div>
-            <form role="form">
+            <form method="POST" action="/SubmitSoal/{{$kategori}}" class="form-horizontal" enctype="multipart/form-data">
+                @method("POST")
+                @csrf
                 <div class="card-body">
                     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                         {{-- <div class="row">
@@ -126,7 +128,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-dark" href="/AuditSumary">Back</a>
+                    <a class="btn btn-dark" href="{{ url()->previous() }}">Back</a>
                     <button type="submit" class="btn btn-info float-right">Submit</button>
                 </div>
             </form>

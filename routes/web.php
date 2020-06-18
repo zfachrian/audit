@@ -35,3 +35,4 @@ Route::get('/userSupervisor', 'UserController@supervisor');
 Route::resource('/audit', 'AuditController');
 Route::get('/AuditSumary/{id}', 'AuditController@audit');
 Route::get('/AuditKategori/{kategori}', 'AuditController@soal');
+Route::post('/SubmitSoal/{soal}', 'AuditController@storeSoal');

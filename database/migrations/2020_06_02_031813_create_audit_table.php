@@ -22,6 +22,8 @@ class CreateAuditTable extends Migration
             $table->integer('auditor');
             $table->timestamp('jadwal');
             $table->integer('jenis_id');
+            $table->integer('manajer');
+            $table->integer('supervisor');
             $table->timestamps();
         });
     }

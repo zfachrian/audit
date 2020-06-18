@@ -40,13 +40,12 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Jenis Audit</th>
-                            <th>Perusahaan di audit</th>
-                            <th>Jenis Usaha</th>
-                            <th>Lingkup Audit</th>
                             <th>Tgl. Audit</th>
-                            <th>Tujuan Audit</th>
+                            <th>Perusahaan di audit</th>
                             <th>Auditor</th>
+                            <th>Acc Manajer</th>
+                            <th>Acc Supervisor</th>
+                            <th>Audit</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -54,46 +53,117 @@
                         @foreach ($diaudit as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->jenis_audit }}</td>
-                            <td>{{ $item->diaudit }}</td>
-                            <td>{{ $item->jenis_usaha }}</td>
-                            <td>{{ $item->lingkup_audit }}</td>
                             <td>{{ $item->jadwal }}</td>
-                            <td>{{ $item->tujuan }}</td>
+                            <td>{{ $item->diaudit }}</td>
                             <td>{{ $item->auditor }}</td>
-                            <td style="width: 25%">
+                            <td>
+                                <?php if ($item->manajer == "0"){  ?>
+                                    <button type="button" class="btn btn-danger">Reject</button>
+                                    <?php }elseif ($item->manajer == NULL ){  ?>
+                                        <button type="button" class="btn btn-secondary">Waiting</button>
+                                        <?php }else {  ?>
+                                            <button type="button" class="btn btn-success">Accept</button>
+                                        <?php
+                                        }
+                                        ?>
+                            </td>
+                            <td>
+                                <?php if ($item->supervisor == "0"){  ?>
+                                    <button type="button" class="btn btn-danger">Reject</button>
+                                    <?php }elseif ($item->supervisor == NULL ){  ?>
+                                        <button type="button" class="btn btn-secondary">Waiting</button>
+                                        <?php }else {  ?>
+                                            <button type="button" class="btn btn-success">Accept</button>
+                                        <?php
+                                        }
+                                        ?>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Lihat Detail</button>
                                 <a href="/AuditSumary/{{$item->id}}" class="btn btn-primary">Audit</a>
+                            </td>
+                            <td style="width: 15%">
                                 <a href="{{ route('audit.edit', $item->id ) }}" class="btn btn-success">Edit</a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-delete-modal-lg{{$item->id}}">Delete</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-delete-modal-lg{{$item->id}}">Delete</button>
 
-                            <!-- add modal -->
-                            <div class="modal fade bd-delete-modal-lg{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Delete Auditor</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
+
+                                <!-- delete modal -->
+                                <div class="modal fade bd-delete-modal-lg{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Delete Auditor</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                                <div class="modal-body">
+                                                    <h5> Apakah anda yakin untuk menghapus data audit perusahaan "{{$item->diaudit}}" ?</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form method="post" action="{{ route('audit.destroy', $item->id ) }}" class="d-inline">
+                                                        @method('delete') @csrf
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
                                         </div>
-                                            <div class="modal-body">
-                                                <h5> Apakah anda yakin untuk menghapus data audit perusahaan "{{$item->diaudit}}" ?</h5>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <form method="post" action="{{ route('audit.destroy', $item->id ) }}" class="d-inline">
-                                                    @method('delete') @csrf
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
                                     </div>
                                 </div>
-                            </div>
+
+                                {{-- detail modal --}}
+                                <div class="modal fade bd-detail-modal-lg{{$item->id}}" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Detail Data Audit</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Jenis Audit</label>
+                                                    <input disabled type="text" class="form-control" value="{{$item->jenis_audit}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Perusahaan yang Diaudit</label>
+                                                    <input disabled type="text" class="form-control" value="{{$item->diaudit}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Lingkup Audit</label>
+                                                    <input disabled type="text" class="form-control" value="{{$item->lingkup_audit}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Jenis Usaha</label>
+                                                    <input disabled type="text" class="form-control" value="{{$item->jenis_usaha}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Tujuan Audit</label>
+                                                    <input disabled type="text" class="form-control" value="{{$item->tujuan}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Auditor</label>
+                                                    <input disabled type="text" class="form-control" value="{{$item->auditor}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Jadwal Audit</label>
+                                                    <input disabled type="text" class="form-control" value="{{$item->jadwal}}">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
                             <th>No</th>
                             <th>Jenis Audit</th>
@@ -105,82 +175,11 @@
                             <th>Auditor</th>
                             <th>Action</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> --}}
                 </table>
             </div>
         </div><!-- /.card -->
     </div>
 
-    <!-- add modal -->
-    <div class="modal fade bd-add-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Contributor</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {{-- <form method="post" action="{{ route('panel.contributor.store') }}" enctype="multipart/form-data"> --}}
-                    <div class="modal-body">
-                        @csrf
-                        <div class="form-group row">
-                            <label for="name_contributor" class="col-sm-2 col-form-label">Nama</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control @error('name_contributor') is-invalid @enderror" id="name_contributor" name="name_contributor" onkeyup='saveValue(this);'>
-                                @error('name_contributor')
-                                <label class="col-form-label" for="name_contributor">
-                                    {{-- {{ $message }} --}}
-                                </label>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="email_contributor" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control @error('email_contributor') is-invalid @enderror" id="email_contributor" name="email_contributor" onkeyup='saveValue(this);'>
-                                @error('email_contributor')
-                                <label class="col-form-label" for="email_contributor">
-                                    {{-- {{ $message }} --}}
-                                </label>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="telephone_contributor" class="col-sm-2 col-form-label">No. Telp</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control @error('telephone_contributor') is-invalid @enderror" id="telephone_contributor" name="telephone_contributor" onkeyup='saveValue(this);'>
-                                @error('telephone_contributor')
-                                <label class="col-form-label" for="telephone_contributor">
-                                    {{-- {{ $message }} --}}
-                                </label>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="profile_contributor" class="col-sm-2 col-form-label">Profil</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" id="profile_contributor" name="profile_contributor" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="profile_contributor" class="col-sm-2 col-form-label">Contributor Image</label>
-                            <div class="col-sm-10">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="image_contributor" name="image_contributor">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div>
-                                <img id="image_preview"  src="#" class="img-thumbnail">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 
