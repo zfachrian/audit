@@ -7,6 +7,8 @@ use App\Model\Audit;
 use App\Model\JenisAudit;
 use App\Model\Kategori;
 use App\Model\Soal;
+use App\Model\SoalNilai;
+use App\Model\KategoriNilai;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -43,16 +45,16 @@ class AuditController extends Controller
         $data = Audit::find($id);
         // dd($data);
         $kategori = kategori::where('jenis_id',$data->jenis_id )->get();
-        return view('admin.audit.sumary', compact('title', 'data', 'kategori'));
+        return view('admin.audit.sumary', compact('title', 'data', 'kategori', 'id'));
     }
 
-    public function soal($kategori)
+    public function soal($kategori, $audit_id)
     {
         $title = "Audit";
         $data = Kategori::find($kategori);
         $soal = Soal::where('kategori_id', $kategori)->get();
         // dd($soal);
-        return view('admin.audit.soal', compact('title', 'data', 'soal', 'kategori'));
+        return view('admin.audit.soal', compact('title', 'data', 'soal', 'kategori', 'audit_id'));
     }
 
     /**
@@ -72,7 +74,7 @@ class AuditController extends Controller
     public function storeSoal($soal, Request $request)
     {
         // dd($soal);
-        // dd($request->all());
+        dd($request->all());
         // echo json_encode($request);die();
         $jsoal = Soal::where('kategori_id', $soal)->get();
         $i=0;
@@ -81,20 +83,36 @@ class AuditController extends Controller
             //     'kategori_id'               =>'required'
             // ]);
 
-            $diperiksa  = "diperiksa".$i;
-            $tdksesuai  = "tdksesuai".$i;
-            $persen     = "persen".$i;
-            $keterangan  = "keterangan".$i;
+            // $audit_id  = "audit_id$i";
+            // $soal_id  = "soal_id".$i;
+            // $diperiksa  = "diperiksa$i";
+            // $tdksesuai  = "tdksesuai$i";
+            // $persen     = "persen$i";
+            // $keterangan  = "keterangan$i";
 
-            soal::create([
-                'total_diperiksa'   => $request->$diperiksa,
-                'total_tdksesuai'   => $request->$tdksesuai,
-                'persentase'        => $request->$persen,
-                'keterangan'        => $request->$keterangan
+            // $kategori_id  = "kategori_id$i";
+
+            SoalNilai::create([
+                'audit_id'          => $request->audit_id,
+                'soal_id'           => $item->id,
+                'total_diperiksa'   => $request->diperiksa,
+                'total_tdksesuai'   => $request->tdksesuai,
+                'persentase'        => $request->persen,
+                'keterangan'        => $request->keterangan
             ]);
 
         }
         $i++;
+
+        KategoriNilai::create([
+            'audit_id'          => $request->audit_id,
+            'kategori_id'       => $request->kategori_id,
+            // 'total_diperiksa'   => $request->$diperiksa,
+            // 'total_tdksesuai'   => $request->$tdksesuai,
+            'persentase'        => $request->totalPersen
+            // 'keterangan'        => $request->$keterangan
+        ]);
+
         return redirect('/AuditSumary')->with('success', 'Data berhasil ditambahkan!');
     }
 
@@ -127,7 +145,7 @@ class AuditController extends Controller
             'jadwal'          => $request->jadwal
         ]);
 
-        return redirect('/AuditSumary')->with('success', 'Data berhasil ditambahkan!');
+        return redirect('/audit')->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**

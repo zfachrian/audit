@@ -33,7 +33,7 @@
                     <div class="row">
                         {{-- <div class="col-sm-12 col-md-6">
                             <div class="dataTables_length" id="example1_length">
-                                <label>Show 
+                                <label>Show
                                     <select name="example1_length" aria-controls="example1" class="custom-select custom-select-sm form-control form-control-sm">
                                         <option value="10">10</option>
                                         <option value="25">25</option>
@@ -77,7 +77,7 @@
                                     </tr>
                                 </thead>
                                     <tbody>
-                                        @foreach ($kategori as $item)    
+                                        @foreach ($kategori as $item)
                                             <tr role="row" class="odd">
                                                 <td tabindex="0" class="sorting_1">{{ $loop->iteration }}</td>
                                                 <td>{{$item->kategori_soal}}</td>
@@ -85,14 +85,14 @@
                                                 <td>{{$item->total_tdksesuai}}</td>
                                                 <td id="hasil">{{$item->presentase}}</td>
                                                 <td>
-                                                <a href="/AuditKategori/{{$item->id}}" class="btn btn-primary">Audit Kategori</a>
+                                                <a href="/AuditKategori/{{$item->id}}/{{$id}}" class="btn btn-primary">Audit Kategori</a>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>                                        
+                                        <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>
                                         <th rowspan="1" colspan="2">60% (Good)</th>
                                     </tr>
                                 </tfoot>
@@ -101,10 +101,10 @@
                     </div>
                 </div>
             </div>
-            
+
         </div><!-- /.card -->
     </div>
 
-    
+
 @endsection
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSoalTable extends Migration
+class CreateKategoriNilaiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateSoalTable extends Migration
      */
     public function up()
     {
-        Schema::create('soal', function (Blueprint $table) {
+        Schema::create('kategori_nilai', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('audit_id');
             $table->integer('kategori_id');
-            $table->text('topik');
+            $table->integer('total_diperiksa')->nullable();
+            $table->integer('total_tdksesuai')->nullable();
+            $table->integer('persentase')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateSoalTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('soal');
+        Schema::dropIfExists('kategori_nilai');
     }
 }

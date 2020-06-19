@@ -17,10 +17,6 @@ class CreateKategoriSoalTable extends Migration
             $table->increments('id');
             $table->integer('jenis_id');
             $table->text('kategori_soal');
-            $table->integer('total_diperiksa')->nullable();
-            $table->integer('total_tdksesuai')->nullable();
-            $table->integer('persentase')->nullable();
-            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }
