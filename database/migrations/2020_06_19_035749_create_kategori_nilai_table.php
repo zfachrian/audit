@@ -19,7 +19,7 @@ class CreateKategoriNilaiTable extends Migration
             $table->integer('kategori_id');
             $table->integer('total_diperiksa')->nullable();
             $table->integer('total_tdksesuai')->nullable();
-            $table->integer('persentase')->nullable();
+            $table->integer('total_persentase')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });

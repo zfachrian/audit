@@ -10,8 +10,8 @@
         var y = document.getElementById(tdksesuai{{$loop->iteration}}).value;
 
         var hasil = (parseFloat(x) - parseFloat(y)) / parseFloat(x) * 100;
-        console.log(hasil);
-        document.getElementById(persen{{$loop->iteration}}).value = hasil;
+        // console.log(hasil);
+        document.getElementById(persen{{$loop->iteration}}).value = hasil.toFixed(2);
 
         //total persen
         let persentaseCount = 0;
@@ -42,7 +42,13 @@
                     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Auditor</button> --}}
                 </div>
             </div>
-            <form method="POST" action="/SubmitSoal/{{$kategori}}" class="form-horizontal" enctype="multipart/form-data">
+            <?php
+            $act = '/SubmitSoal/{{$kategori}}';
+            ?>
+            @if($url == 'edit')             
+            <?php  $act = "/SubmitSoal/{$kategori}/{$totalPersen['id']}";?>          
+            @endif
+            <form method="POST" action="{{$act}}" class="form-horizontal" enctype="multipart/form-data">
                 @method("POST")
                 @csrf
                 <div class="card-body">
@@ -80,10 +86,10 @@
                                                 Topik
                                             </th>
                                             <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
-                                                Jumlah Diperiksa
+                                                Diperiksa
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                                                Jumlah Tidak Sesuai
+                                                Tidak Sesuai
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
                                                 Kepatuhan(%)
@@ -93,6 +99,14 @@
                                             </th>
                                         </tr>
                                     </thead>
+                                            <?php
+                                            $val = '';
+                                            $status = 'disable';
+                                            ?>
+                                            @if($url == 'edit')             
+                                            <?php  $val = "{$totalPersen['total_persentase']}";?>          
+                                            <?php  $status = ' ';?>      
+                                            @endif
                                         <tbody>
                                             <tr role="row" class="odd">
                                                 <td colspan="6" style="background-color:yellow;">{{$data->kategori_soal}}</td>
@@ -100,21 +114,22 @@
                                             @foreach ($soal as $item)
                                                 <tr role="row" class="odd">
                                                     <td tabindex="0" class="sorting_1">{{$loop->iteration}}</td>
-                                                    <td>{{$item->topik}}</td>
+                                                    <td >{{$item->topik}}</td>
                                                     <td>
-                                                        <input hidden type="number" class="form-control" name="kategori_id{{$loop->iteration}}" id="kategori_id{{$loop->iteration}}" value="{{$kategori}}">
-                                                        <input hidden type="number" class="form-control" name="soal_id{{$loop->iteration}}" id="soal_id{{$loop->iteration}}" value="{{$item->id}}">
+                                                        <input {{$status}} hidden type="number" class="form-control" name="id_nilai[{{$loop->iteration}}]" id="id_nilai{{$loop->iteration}}" value="{{$item->id_nilai}}">
+                                                        <input hidden type="number" class="form-control" name="audit_id[{{$loop->iteration}}]" id="audit_id" value="{{$audit_id}}">
+                                                        <input hidden type="number" class="form-control" name="soal_id[{{$loop->iteration}}]" id="soal_id{{$loop->iteration}}" value="{{$item->id_soal}}">
 
-                                                        <input type="number" class="form-control diperiksa-input" name="diperiksa[]" id="diperiksa{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')"  placeholder="jumlah diperiksa" value="{{$item->total_diperiksa}}">
+                                                        <input type="number" class="form-control diperiksa-input" name="diperiksa[{{$loop->iteration}}]" id="diperiksa{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')"  placeholder="jumlah diperiksa" value="{{$item->diperiksa}}">
                                                     </td>
-                                                    <td>
-                                                        <input type="number" class="form-control tdksesuai-input" name="tdksesuai[]" id="tdksesuai{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')" placeholder="jumlah tidak sesuai" value="{{$item->total_tdksesuai}}">
+                                                    <td >
+                                                        <input type="number" class="form-control tdksesuai-input" name="tdksesuai[{{$loop->iteration}}]" id="tdksesuai{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')" placeholder="jumlah tidak sesuai" value="{{$item->tdksesuai}}">
                                                     </td>
-                                                    <td>
-                                                        <input disabled name="persen[]" id="persen{{$loop->iteration}}" value="{{$item->persentase}}" class="persentase-input" >%
+                                                    <td >
+                                                        <input readonly name="persentase[{{$loop->iteration}}]" id="persen{{$loop->iteration}}" value="{{$item->persentase}}" class="persentase-input" >
                                                     </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" name="keterangan[]" id="keterangan{{$loop->iteration}}" placeholder="keterangan">
+                                                    <td style="width: 20%">
+                                                        <input type="text" value="{{$item->ket}}" class="form-control" name="keterangan[{{$loop->iteration}}]" id="keterangan{{$loop->iteration}}" placeholder="keterangan" >
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -123,10 +138,10 @@
                                     <tfoot>
                                         <tr>
                                             <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>
-                                            {{-- <th rowspan="1" colspan="1"><input type="number" name="totalDiperiksa" id="totalDiperiksa" readonly value="0" class="total-diperiksa" /></th>
-                                            <th rowspan="1" colspan="1"><input type="number" name="totalTdksesuai" id="totalTdksesuai" readonly value="0" class="total-tdksesuai" /></th> --}}
-                                            <th rowspan="1" colspan="2"><input type="number" name="totalPersen" id="totalPersen" readonly value="0" class="total-persen" />%</th>
-                                            <input type="number" class="form-control" name="audit_id{{$loop->iteration}}" id="audit_id{{$loop->iteration}}" value="{{$audit_id}}">
+                                            {{-- <th rowspan="1" colspan="1"><input type="number" name="totalDiperiksa" id="totalDiperiksa" readonly value="0" class="total-diperiksa" /></th> --}}
+                                            {{-- <th rowspan="1" colspan="1"><input type="number" name="totalTdksesuai" id="totalTdksesuai" readonly value="0" class="total-tdksesuai" /></th> --}}
+                                            {{-- <th rowspan="1" colspan="2"><input value="{{$id_soal}}" type="number" id="id_nilaiKat" readonly value="0" class="total-persen" />%</th> --}}
+                                            <th rowspan="1" colspan="2"><input value="{{$val}}" type="number" id="totalPersen" readonly value="0" class="total-persen" />%</th>
                                         </tr>
                                     </tfoot>
                                 </table>

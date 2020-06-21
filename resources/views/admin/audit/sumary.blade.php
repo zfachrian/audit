@@ -3,15 +3,15 @@
 @section('style')@endsection
 @section('script')
 <script>
-		var table = document.getElementById("nilai"), sumHsl = 0;
-        parseFloat()
-		{
-			a = parseInt(table.rows[1].cells[2].innerHTML);
-			b = parseInt(table.rows[1].cells[2].innerHTML);
+		// var table = document.getElementById("nilai"), sumHsl = 0;
+        // parseFloat()
+		// {
+		// 	a = parseInt(table.rows[1].cells[2].innerHTML);
+		// 	b = parseInt(table.rows[1].cells[2].innerHTML);
 
-			sumHsl = a + b;
-		}
-		document.getElementById("hasil").innerHTML = sumHsl;
+		// 	sumHsl = a + b;
+		// }
+		// document.getElementById("hasil").innerHTML = sumHsl;
 
 </script>
 @endsection
@@ -76,6 +76,7 @@
                                         </th>
                                     </tr>
                                 </thead>
+                                   
                                     <tbody>
                                         @foreach ($kategori as $item)
                                             <tr role="row" class="odd">
@@ -83,9 +84,13 @@
                                                 <td>{{$item->kategori_soal}}</td>
                                                 <td>{{$item->total_diperiksa}}</td>
                                                 <td>{{$item->total_tdksesuai}}</td>
-                                                <td id="hasil">{{$item->presentase}}</td>
+                                                <td id="hasil">{{$item->total_persentase}}</td>
                                                 <td>
-                                                <a href="/AuditKategori/{{$item->id}}/{{$id}}" class="btn btn-primary">Audit Kategori</a>
+                                                    @if($item->total_diperiksa == NULL)
+                                                        <a href="/AuditKategori/{{$item->kat_id}}/{{$id}}" class="btn btn-primary">Audit Kategori</a>
+                                                    @else
+                                                        <a href="/AuditKategori/{{$item->kat_id}}/{{$id}}/edit" class="btn btn-primary">Audit Kategori edit</a>  
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
