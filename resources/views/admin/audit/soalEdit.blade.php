@@ -42,12 +42,6 @@
                     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Auditor</button> --}}
                 </div>
             </div>
-            <?php
-            $act = '/SubmitSoal/{{$kategori}}';
-            ?>
-            @if($url == 'edit')
-            <?php  $act = "/SubmitSoal/{$kategori}/{$totalPersen['id']}";?>
-            @endif
             <form method="POST" action="/SubmitSoal/{{$kategori}}/{{$totalPersen['id']}}" class="form-horizontal" enctype="multipart/form-data">
                 @method("POST")
                 @csrf
