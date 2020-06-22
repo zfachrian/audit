@@ -45,8 +45,9 @@ class AuditController extends Controller
         $data = Audit::find($id);
         // dd($data);
         $kategori = kategori::select('*', 'kategori_soal.id as kat_id')
-                    ->LEFTJOIN('kategori_nilai as nilai', 'nilai.kategori_id', '=', 'kategori_soal.id')
-                    ->where('kategori_soal.jenis_id', '=', $data->jenis_id, 'AND', 'nilai.audit_id', '=', $id)
+                            ->LEFTJOIN('kategori_nilai as nilai', 'nilai.kategori_id', '=', 'kategori_soal.id')
+                            // ->JOIN('audit as audit', 'audit.id', '=', 'nilai.audit_id')
+                    ->where('kategori_soal.jenis_id', '=', $data->jenis_id, 'AND', 'kategori_nilai.audit_id', '=', $id)
                     ->get();
         // dd($kategori);
         return view('admin.audit.sumary', compact('title', 'data', 'kategori', 'id'));
@@ -56,7 +57,9 @@ class AuditController extends Controller
     {
         $title = "Audit";
         $data = Kategori::find($kategori);
-        $soal = soal::where('kategori_id',$kategori )->get();
+        $soal = soal::select('*', 'soal.id as id_soal')
+                      ->where('kategori_id', '=', $kategori )
+                      ->get();
         // dd($soal);
         $url = request()->segment(count(request()->segments()));
         return view('admin.audit.soal', compact('title', 'data', 'soal', 'kategori', 'audit_id', 'url'));
@@ -75,7 +78,7 @@ class AuditController extends Controller
                     ->get();
         // dd($soal);
         $url = request()->segment(count(request()->segments()));
-        return view('admin.audit.soal', compact('title', 'data', 'soal', 'kategori', 'audit_id', 'totalPersen', 'url'));
+        return view('admin.audit.soalEdit', compact('title', 'data', 'soal', 'kategori', 'audit_id', 'totalPersen', 'url'));
     }
 
     /**
@@ -101,7 +104,7 @@ public function storeSoal($soal, Request $request)
             if (is_array($data) || is_object($data))
             {
                 foreach($data as $key => $value) { // $key is item key
-                    $item[$key][$field] = $value; 
+                    $item[$key][$field] = $value;
                 }
             }
         }
@@ -109,10 +112,11 @@ public function storeSoal($soal, Request $request)
         SoalNilai::insert($item);
 
         $audit_id = ($item[1]['audit_id']);
-        $total_diperiksa = array_sum($request->all()["diperiksa"]); 
+        $total_diperiksa = array_sum($request->all()["diperiksa"]);
         $total_tdksesuai = array_sum($request->all()["tdksesuai"]);
         $total_persen = (array_sum($request->all()["persentase"])/(count($request->all()["persentase"])));
-        // dd($total_persen);        
+        $totalPersen = $total_persen;
+        // dd($total_persen);
 
 
         KategoriNilai::create([
@@ -120,18 +124,17 @@ public function storeSoal($soal, Request $request)
             'kategori_id'       => $soal,
             'total_diperiksa'   => $total_diperiksa,
             'total_tdksesuai'   => $total_tdksesuai,
-            'total_persentase'  => $total_persen
-            // 'keterangan'        => $request->$keterangan
+            'total_persentase'  => $totalPersen
         ]);
 
         return redirect('/AuditSumary/'.$audit_id)->with('success', 'Data berhasil ditambahkan!');
     }
 
-    public function storeEditSoal($katNilai, $soal, Request $request)
+    public function storeEditSoal($soal, $katNilai, Request $request)
     {
-        $jsoal = Soal::where('kategori_id', $katNilai)->get();
+        // $jsoal = Soal::where('kategori_id', $katNilai)->get();
         $item = [];
-        // dd($request->id_nilai);
+        // dd($jsoal);
         $item1 = [];
         $item2 = [];
         $item3 = [];
@@ -140,7 +143,7 @@ public function storeSoal($soal, Request $request)
             if (is_array($data) || is_object($data))
             {
                 foreach($data as $key => $value) { // $key is item key
-                    $item[$key][$field] = $value; 
+                    $item[$key][$field] = $value;
                     if($field == 'audit_id'){
                         $item1[$key][$field] = $value;
                     }elseif($field == 'soal_id') {
@@ -155,28 +158,26 @@ public function storeSoal($soal, Request $request)
         }
 
             // $param = $item2;
-            // echo json_encode($param);die();
-        
+            // echo json_encode($request->all()["tdksesuai"]);die();
+
         $i=1;
-        foreach($jsoal as $item){
-            // $param = $item1[$i];
-            // $val = $item2[$i];
-            // echo json_encode($update);die();
-            // SoalNilai::updateOrInsert($param, $val);
+        foreach($item2 as $item){
             SoalNilai::where('id', $item3[$i])
                        ->update($item2[$i]);
+            // echo $i;
+            $i++;
         }
-        $i++;
-        die();
+        // die();
         // SoalNilai::where('id', $request->soal_id)->Update([$item]);
-        $audit_id = ($item[1]['audit_id']);
-        $total_diperiksa = array_sum($request->all()["diperiksa"]); 
+        $audit_id = ($item1[1]['audit_id']);
+        $total_diperiksa = array_sum($request->all()["diperiksa"]);
         $total_tdksesuai = array_sum($request->all()["tdksesuai"]);
         $total_persen = (array_sum($request->all()["persentase"])/(count($request->all()["persentase"])));
-        // dd($total_persen);        
+        // dd($katNilai);
 
 
-        kategoriNilai::where('id', $katNilai)->Update([
+        kategoriNilai::where('id', '=', $katNilai)
+                       ->Update([
             'audit_id'          => $audit_id,
             'kategori_id'       => $soal,
             'total_diperiksa'   => $total_diperiksa,

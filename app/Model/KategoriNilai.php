@@ -9,6 +9,6 @@ class KategoriNilai extends Model
     protected $table = 'kategori_nilai';
 
     protected $fillable = [
-        'audit_id', 'kategori_id', 'total_diperiksa', 'total_tdksesuai', 'presentase', 'keterangan'
+        'audit_id', 'kategori_id', 'total_diperiksa', 'total_tdksesuai', 'total_persentase', 'keterangan'
     ];
 }

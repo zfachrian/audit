@@ -42,7 +42,13 @@
                     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Auditor</button> --}}
                 </div>
             </div>
-            <form method="POST" action="/SubmitSoal/{{$kategori}}" class="form-horizontal" enctype="multipart/form-data">
+            <?php
+            $act = '/SubmitSoal/{{$kategori}}';
+            ?>
+            @if($url == 'edit')
+            <?php  $act = "/SubmitSoal/{$kategori}/{$totalPersen['id']}";?>
+            @endif
+            <form method="POST" action="/SubmitSoal/{{$kategori}}/{{$totalPersen['id']}}" class="form-horizontal" enctype="multipart/form-data">
                 @method("POST")
                 @csrf
                 <div class="card-body">
@@ -110,6 +116,7 @@
                                                     <td tabindex="0" class="sorting_1">{{$loop->iteration}}</td>
                                                     <td >{{$item->topik}}</td>
                                                     <td>
+                                                        <input {{$status}} hidden type="number" class="form-control" name="id_nilai[{{$loop->iteration}}]" id="id_nilai{{$loop->iteration}}" value="{{$item->id_nilai}}">
                                                         <input hidden type="number" class="form-control" name="audit_id[{{$loop->iteration}}]" id="audit_id" value="{{$audit_id}}">
                                                         <input hidden type="number" class="form-control" name="soal_id[{{$loop->iteration}}]" id="soal_id{{$loop->iteration}}" value="{{$item->id_soal}}">
 
@@ -131,6 +138,9 @@
                                     <tfoot>
                                         <tr>
                                             <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>
+                                            {{-- <th rowspan="1" colspan="1"><input type="number" name="totalDiperiksa" id="totalDiperiksa" readonly value="0" class="total-diperiksa" /></th> --}}
+                                            {{-- <th rowspan="1" colspan="1"><input type="number" name="totalTdksesuai" id="totalTdksesuai" readonly value="0" class="total-tdksesuai" /></th> --}}
+                                            {{-- <th rowspan="1" colspan="2"><input value="{{$id_soal}}" type="number" id="id_nilaiKat" readonly value="0" class="total-persen" />%</th> --}}
                                             <th rowspan="1" colspan="2"><input value="{{$val}}" type="number" id="totalPersen" readonly value="0" class="total-persen" />%</th>
                                         </tr>
                                     </tfoot>

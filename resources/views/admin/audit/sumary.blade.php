@@ -76,7 +76,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                   
+
                                     <tbody>
                                         @foreach ($kategori as $item)
                                             <tr role="row" class="odd">
@@ -89,7 +89,7 @@
                                                     @if($item->total_diperiksa == NULL)
                                                         <a href="/AuditKategori/{{$item->kat_id}}/{{$id}}" class="btn btn-primary">Audit Kategori</a>
                                                     @else
-                                                        <a href="/AuditKategori/{{$item->kat_id}}/{{$id}}/edit" class="btn btn-primary">Audit Kategori edit</a>  
+                                                        <a href="/AuditKategori/{{$item->kat_id}}/{{$id}}/edit" class="btn btn-primary">Audit Kategori</a>
                                                     @endif
                                                 </td>
                                             </tr>
