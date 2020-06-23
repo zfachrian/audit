@@ -78,18 +78,18 @@
                                 </thead>
 
                                     <tbody>
-                                        @foreach ($data_kategori_collection as $item)
+                                        @foreach ($kategori as $item)
                                             <tr role="row" class="odd">
                                                 <td tabindex="0" class="sorting_1">{{ $loop->iteration }}</td>
-                                                <td>{{$item['soal']}}</td>
-                                                <td>{{$item['total_diperiksa']}}</td>
-                                                <td>{{$item['total_tdksesuai']}}</td>
-                                                <td id="hasil">{{$item['total_persentase']}}</td>
+                                                <td>{{$item->kategoriSoal}}</td>
+                                                <td>{{$item->total_diperiksa}}</td>
+                                                <td>{{$item->total_tdksesuai}}</td>
+                                                <td id="hasil">{{$item->total_persentase}}</td>
                                                 <td>
-                                                    @if($item['total_diperiksa'] == NULL)
-                                                        <a href="/AuditKategori/{{$item['id']}}/{{$id}}" class="btn btn-primary">Audit Kategori</a>
+                                                    @if($item->total_diperiksa == NULL)
+                                                        <a href="/AuditKategori/{{$item->kat_id}}/{{$id}}" class="btn btn-primary">Audit Kategori</a>
                                                     @else
-                                                        <a href="/AuditKategori/{{$item['id']}}/{{$id}}/edit" class="btn btn-primary">Audit Kategori</a>
+                                                        <a href="/AuditKategori/{{$item->kat_id}}/{{$id}}/edit" class="btn btn-primary">Audit Kategori</a>
                                                     @endif
                                                 </td>
                                             </tr>

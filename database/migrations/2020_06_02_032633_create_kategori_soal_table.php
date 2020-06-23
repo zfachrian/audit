@@ -16,7 +16,7 @@ class CreateKategoriSoalTable extends Migration
         Schema::create('kategori_soal', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('jenis_id');
-            $table->text('kategori_soal');
+            $table->text('kategoriSoal');
             $table->timestamps();
         });
     }
