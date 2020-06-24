@@ -355,26 +355,19 @@ public function storeSoal($soal, Request $request)
         return redirect('/audit')->with('success', 'Data berhasil diupdate!');
     }
 
-    public function updateStatus(Request $request, Audit $audit)
+    public function updateStatusManajer(Request $request, Audit $audit)
     {
-        // dd($audit->id);
-        //   $request->validate([
-        //     'jenis'               =>'required',
-        //     'diaudit'             =>'required',
-        //     'lingkup'             =>'required',
-        //     'jenis_usaha'         =>'required',
-        //     'tujuan'              =>'required',
-        //     'jadwal'              =>'required'
-        // ]);
-
         audit::where('id', $audit->id)->Update([
-                'jenis_id'        => $request->jenis,
-                'diaudit'         => $request->diaudit,
-                'lingkup_audit'   => $request->lingkup,
-                'jenis_usaha'     => $request->jenis_usaha,
-                'tujuan'          => $request->tujuan,
-                'auditor'         => $request->auditor,
-                'jadwal'          => $request->jadwal
+                'manajer'          => $request->manajer
+        ]);
+
+        return redirect('/audit')->with('success', 'Data berhasil diupdate!');
+    }
+
+    public function updateStatusSupervisor(Request $request, Audit $audit)
+    {
+        audit::where('id', $audit->id)->Update([
+                'supervisor'          => $request->supervisor
         ]);
 
         return redirect('/audit')->with('success', 'Data berhasil diupdate!');
