@@ -3,7 +3,7 @@
 @section('style')@endsection
 @section('script')
 
-@foreach ($soal as $item)
+@foreach ($data_soal_collection as $item)
 <script type="text/javascript">
     function persentase(diperiksa{{$loop->iteration}}, tdksesuai{{$loop->iteration}}, persen{{$loop->iteration}}) {
         var x = document.getElementById(diperiksa{{$loop->iteration}}).value;
@@ -103,27 +103,27 @@
                                             @endif
                                         <tbody>
                                             <tr role="row" class="odd">
-                                                <td colspan="6" style="background-color:yellow;">{{$data->kategori_soal}}</td>
+                                                <td colspan="6" style="background-color:yellow;">{{$data->kategoriSoal}}</td>
                                             </tr>
-                                            @foreach ($soal as $item)
+                                            @foreach ($data_soal_collection as $item)
                                                 <tr role="row" class="odd">
                                                     <td tabindex="0" class="sorting_1">{{$loop->iteration}}</td>
-                                                    <td >{{$item->topik}}</td>
+                                                    <td >{{$item['soal']}}</td>
                                                     <td>
-                                                        <input {{$status}} hidden type="number" class="form-control" name="id_nilai[{{$loop->iteration}}]" id="id_nilai{{$loop->iteration}}" value="{{$item->id_nilai}}">
+                                                        <input {{$status}} hidden type="number" class="form-control" name="id_nilai[{{$loop->iteration}}]" id="id_nilai{{$loop->iteration}}" value="{{$item['id_nilai']}}">
                                                         <input hidden type="number" class="form-control" name="audit_id[{{$loop->iteration}}]" id="audit_id" value="{{$audit_id}}">
-                                                        <input hidden type="number" class="form-control" name="soal_id[{{$loop->iteration}}]" id="soal_id{{$loop->iteration}}" value="{{$item->id_soal}}">
+                                                        <input hidden type="number" class="form-control" name="soal_id[{{$loop->iteration}}]" id="soal_id{{$loop->iteration}}" value="{{$item['id_soal']}}">
 
-                                                        <input type="number" class="form-control diperiksa-input" name="diperiksa[{{$loop->iteration}}]" id="diperiksa{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')"  placeholder="jumlah diperiksa" value="{{$item->diperiksa}}">
+                                                        <input type="number" class="form-control diperiksa-input" name="diperiksa[{{$loop->iteration}}]" id="diperiksa{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')"  placeholder="jumlah diperiksa" value="{{$item['diperiksa']}}">
                                                     </td>
                                                     <td >
-                                                        <input type="number" class="form-control tdksesuai-input" name="tdksesuai[{{$loop->iteration}}]" id="tdksesuai{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')" placeholder="jumlah tidak sesuai" value="{{$item->tdksesuai}}">
+                                                        <input type="number" class="form-control tdksesuai-input" name="tdksesuai[{{$loop->iteration}}]" id="tdksesuai{{$loop->iteration}}" onInput="persentase('diperiksa{{$loop->iteration}}', 'tdksesuai{{$loop->iteration}}', 'persen{{$loop->iteration}}')" placeholder="jumlah tidak sesuai" value="{{$item['tdksesuai']}}">
                                                     </td>
                                                     <td >
-                                                        <input readonly name="persentase[{{$loop->iteration}}]" id="persen{{$loop->iteration}}" value="{{$item->persentase}}" class="persentase-input" >
+                                                        <input readonly name="persentase[{{$loop->iteration}}]" id="persen{{$loop->iteration}}" value="{{$item['persentase']}}" class="persentase-input" >
                                                     </td>
                                                     <td style="width: 20%">
-                                                        <input type="text" value="{{$item->ket}}" class="form-control" name="keterangan[{{$loop->iteration}}]" id="keterangan{{$loop->iteration}}" placeholder="keterangan" >
+                                                        <input type="text" value="{{$item['keterangan']}}" class="form-control" name="keterangan[{{$loop->iteration}}]" id="keterangan{{$loop->iteration}}" placeholder="keterangan" >
                                                     </td>
                                                 </tr>
                                             @endforeach

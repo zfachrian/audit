@@ -60,7 +60,7 @@
                                 <?php if ($item->manajer == "0"){  ?>
                                     <button type="button" class="btn btn-danger">Reject</button>
                                     <?php }elseif ($item->manajer == NULL ){  ?>
-                                        <button type="button" class="btn btn-secondary">Waiting</button>
+                                        <button type="button" class="btn btn-secondary" >Waiting</button>
                                         <?php }else {  ?>
                                             <button type="button" class="btn btn-success">Accept</button>
                                         <?php

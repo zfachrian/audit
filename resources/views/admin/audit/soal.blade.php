@@ -103,7 +103,7 @@
                                             @endif
                                         <tbody>
                                             <tr role="row" class="odd">
-                                                <td colspan="6" style="background-color:yellow;">{{$data->kategori_soal}}</td>
+                                                <td colspan="6" style="background-color:yellow;">{{$data->kategoriSoal}}</td>
                                             </tr>
                                             @foreach ($soal as $item)
                                                 <tr role="row" class="odd">

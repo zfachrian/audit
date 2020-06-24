@@ -106,7 +106,10 @@
                     </div>
                 </div>
             </div>
-
+            <div class="card-footer">
+                <a class="btn btn-dark" href="/audit">Back</a>
+                {{-- <button type="submit" class="btn btn-info float-right">Submit</button> --}}
+            </div>
         </div><!-- /.card -->
     </div>
 
