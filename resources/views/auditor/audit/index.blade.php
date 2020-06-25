@@ -58,49 +58,25 @@
                             <td>{{ $item->auditor }}</td>
                             <td>
                                 <?php if ($item->manajer == "0"){  ?>
-                                    <form method="POST" action="/StatusManajer/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
-                                        @method("POST")
-                                        @csrf
                                             <button type="submit" class="btn btn-danger">Reject</button>
-                                        </form>
                                     <?php }elseif ($item->manajer == NULL ){  ?>
-                                            <form method="POST" action="/StatusManajer/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
-                                            @method("POST")
-                                            @csrf
                                                 <button type="submit" class="btn btn-secondary">Waiting</button>
-                                            </form>
                                         <?php }else {  ?>
-                                            <form method="POST" action="/StatusManajer/{{$item->id}}/0" class="form-horizontal" >
-                                                @method("POST")
-                                                @csrf
                                                     <button type="submit" class="btn btn-success">Accept</button>
-                                            </form>
-                                        <?php
-                                        }
-                                        ?>
+                                                <?php
+                                                }
+                                                ?>
                             </td>
                             <td>
                                 <?php if ($item->supervisor == "0"){  ?>
-                                    <form method="POST" action="/StatusSupervisor/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
-                                        @method("POST")
-                                        @csrf
                                             <button type="submit" class="btn btn-danger">Reject</button>
-                                        </form>
                                     <?php }elseif ($item->supervisor == NULL ){  ?>
-                                            <form method="POST" action="/StatusSupervisor/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
-                                            @method("POST")
-                                            @csrf
                                                 <button type="submit" class="btn btn-secondary">Waiting</button>
-                                            </form>
                                         <?php }else {  ?>
-                                            <form method="POST" action="/StatusSupervisor/{{$item->id}}/0" class="form-horizontal" >
-                                                @method("POST")
-                                                @csrf
                                                     <button type="submit" class="btn btn-success">Accept</button>
-                                            </form>
-                                        <?php
-                                        }
-                                        ?>
+                                            <?php
+                                            }
+                                            ?>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Lihat Detail</button>

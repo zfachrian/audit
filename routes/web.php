@@ -21,7 +21,7 @@ Route::get('/admin', 'Users\AdminController@index')->name('admin')->middleware('
 Route::get('/auditor', 'Users\AuditorController@index')->name('auditor')->middleware('auditor');
 Route::get('/kontraktor', 'Users\KontraktorController@index')->name('kontraktor')->middleware('kontraktor');
 Route::get('/manajer', 'Users\ManajerController@index')->name('manajer')->middleware('manajer');
-// Route::get('/supervisor', 'Users\SupervisorController@index')->name('supervisor')->middleware('supervisor');
+Route::get('/supervisor', 'Users\SupervisorController@index')->name('supervisor')->middleware('supervisor');
 
 Route::get('/home', 'Users\AdminController@index')->name('home');
 
@@ -39,3 +39,5 @@ Route::get('/AuditKategori/{kategori}/{audit_id}/edit', 'AuditController@editSoa
 Route::get('/AuditKategori/{kategori}/{audit_id}', 'AuditController@soal');
 Route::post('/SubmitSoal/{soal}', 'AuditController@storeSoal');
 Route::post('/SubmitSoal/{soal}/{katNilai}', 'AuditController@storeEditSoal');
+Route::post('/StatusManajer/{id_manajer}/{manajer}', 'AuditController@updateStatusManajer');
+Route::post('/StatusSupervisor/{id_supervisor}/{supervisor}', 'AuditController@updateStatusSupervisor');

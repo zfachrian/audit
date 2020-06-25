@@ -47,7 +47,7 @@
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ Auth::user()->name }}</a>
-          <a class="d-block">SO - {{ Auth::user()->company_name }}</a>
+          <a class="d-block">Admin - {{ Auth::user()->company_name }}</a>
         </div>
       </div>
 
@@ -57,7 +57,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+            <a href="/" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
               Dashboard
@@ -68,31 +68,25 @@
             <a href="pages/widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Widgets
+                Menu
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
+
+          <li class="nav-item has-treeview menu">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+              <i class="nav-icon fas fa-edit"></i>
               <p>
-                Layout Options
+                Audit Menu
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="/audit" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Top Navigation</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Top Navigation + Sidebar</p>
+                  <p>Audit</p>
                 </a>
               </li>
             </ul>
@@ -109,7 +103,7 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-          </li>   
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -129,7 +123,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <!-- {{-- @foreach ($path as $item => $value)
-                <li class="breadcrumb-item @if($loop->last) active @endif"> <a style="text-transform: capitalize;">{{ $value }}</a></li>
+                <li class="breadcrumb-item @if($loop->last) @endif"> <a style="text-transform: capitalize;">{{ $value }}</a></li>
               @endforeach --}} -->
             </ol>
           </div><!-- /.col -->

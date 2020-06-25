@@ -32,7 +32,7 @@ class AuditController extends Controller
                         ->join('jenis_audit as b', 'audit.jenis_id', '=', 'b.id')
                         ->get();
 
-        // echo json_encode($diaudit);die();
+        // dd($diaudit);
         return view('admin.audit.index', compact('title', 'data', 'diaudit'));
     }
 
@@ -355,19 +355,21 @@ public function storeSoal($soal, Request $request)
         return redirect('/audit')->with('success', 'Data berhasil diupdate!');
     }
 
-    public function updateStatusManajer(Request $request, Audit $audit)
+    public function updateStatusManajer($id_manajer, $manajer)
     {
-        audit::where('id', $audit->id)->Update([
-                'manajer'          => $request->manajer
+        // dd($audit->id);
+        audit::where('id', '=', $id_manajer)->Update([
+                'manajer'          => $manajer
         ]);
 
         return redirect('/audit')->with('success', 'Data berhasil diupdate!');
     }
 
-    public function updateStatusSupervisor(Request $request, Audit $audit)
+    public function updateStatusSupervisor($id_supervisor, $supervisor)
     {
-        audit::where('id', $audit->id)->Update([
-                'supervisor'          => $request->supervisor
+        // dd($audit->id);
+        audit::where('id', '=', $id_supervisor)->Update([
+                'supervisor'          => $supervisor
         ]);
 
         return redirect('/audit')->with('success', 'Data berhasil diupdate!');
