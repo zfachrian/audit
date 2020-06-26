@@ -1,4 +1,18 @@
-@extends('admin.templates.main')
+<?php
+$nav = "admin.templates.main";
+$role = Auth::user()->role;
+?>
+@if ($role == '1')
+    <?php $nav = "admin.templates.main" ?>
+@elseif($role == '4')
+    <?php $nav = "admin.templates.main" ?>
+@elseif($role == '5')
+    <?php $nav = "admin.templates.main" ?>
+@else
+    <?php $nav = "auditor.templates.main" ?>
+@endif
+@extends($nav)
+{{-- @extends('admin.templates.main') --}}
 @section('title') Dashboard @endsection
 @section('style')@endsection
 @section('script')@endsection
@@ -80,27 +94,50 @@
                                         ?>
                             </td>
                             <td>
-                                <?php if ($item->supervisor == "0"){  ?>
-                                    <form method="POST" action="/StatusSupervisor/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
-                                        @method("POST")
-                                        @csrf
-                                            <button type="submit" class="btn btn-danger">Reject</button>
-                                        </form>
+                                @if ($role == '2')
+                                {{-- <button type="button" class="btn btn-secondary">Waiting</button> --}}
+                                    <?php if ($item->supervisor == "0"){  ?>
+                                        <button type="button" class="btn btn-danger">Reject</button>
                                     <?php }elseif ($item->supervisor == NULL ){  ?>
-                                            <form method="POST" action="/StatusSupervisor/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
+                                            <button type="button" class="btn btn-secondary">Waiting</button>
+                                    <?php }else {  ?>
+                                                <button type="button" class="btn btn-success">Accept</button>
+                                    <?php
+                                    }
+                                    ?>
+                                @elseif($role == '3')
+                                    <?php if ($item->supervisor == "0"){  ?>
+                                        <button type="button" class="btn btn-danger">Reject</button>
+                                    <?php }elseif ($item->supervisor == NULL ){  ?>
+                                            <button type="button" class="btn btn-secondary">Waiting</button>
+                                    <?php }else {  ?>
+                                                <button type="button" class="btn btn-success">Accept</button>
+                                    <?php
+                                    }
+                                    ?>
+                                @else
+                                    <?php if ($item->supervisor == "0"){  ?>
+                                        <form method="POST" action="/StatusSupervisor/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
                                             @method("POST")
                                             @csrf
-                                                <button type="submit" class="btn btn-secondary">Waiting</button>
+                                                <button type="submit" class="btn btn-danger">Reject</button>
                                             </form>
-                                        <?php }else {  ?>
-                                            <form method="POST" action="/StatusSupervisor/{{$item->id}}/0" class="form-horizontal" >
+                                        <?php }elseif ($item->supervisor == NULL ){  ?>
+                                                <form method="POST" action="/StatusSupervisor/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
                                                 @method("POST")
                                                 @csrf
-                                                    <button type="submit" class="btn btn-success">Accept</button>
-                                            </form>
-                                        <?php
-                                        }
-                                        ?>
+                                                    <button type="submit" class="btn btn-secondary">Waiting</button>
+                                                </form>
+                                            <?php }else {  ?>
+                                                <form method="POST" action="/StatusSupervisor/{{$item->id}}/0" class="form-horizontal" >
+                                                    @method("POST")
+                                                    @csrf
+                                                        <button type="submit" class="btn btn-success">Accept</button>
+                                                </form>
+                                            <?php
+                                            }
+                                            ?>
+                                @endif
                             </td>
                             <td>
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Lihat Detail</button>

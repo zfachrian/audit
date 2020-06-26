@@ -1,4 +1,16 @@
-@extends('admin.templates.main')
+<?php
+$nav = "admin.templates.main";
+?>
+@if ({{ Auth::user()->role }} == 1)
+    <?php $nav = "admin.templates.main"; ?>
+@elseif({{ Auth::user()->role }} == 4)
+    <?php $nav = "admin.templates.main"; ?>
+@elseif({{ Auth::user()->role }} == 5)
+    <?php $nav = "admin.templates.main"; ?>
+@else
+    <?php $nav = "auditor.templates.main"; ?>
+@endif
+@extends('{{$nav}}')
 @section('title') Dashboard @endsection
 @section('style')@endsection
 @section('script')@endsection
