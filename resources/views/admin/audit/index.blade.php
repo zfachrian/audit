@@ -2,16 +2,16 @@
 $nav = "admin.templates.main";
 $role = Auth::user()->role;
 ?>
-@if ($role == '1')
-    <?php $nav = "admin.templates.main" ?>
-@elseif($role == '4')
-    <?php $nav = "admin.templates.main" ?>
-@elseif($role == '5')
-    <?php $nav = "admin.templates.main" ?>
-@else
-    <?php $nav = "auditor.templates.main" ?>
-@endif
-@extends($nav)
+// @if ($role == '1')
+//     <?php $nav = "admin.templates.main" ?>
+// @elseif($role == '4')
+//     <?php $nav = "admin.templates.main" ?>
+// @elseif($role == '5')
+//     <?php $nav = "admin.templates.main" ?>
+// @else
+//     <?php $nav = "auditor.templates.main" ?>
+// @endif
+@extends("admin.templates.main")
 {{-- @extends('admin.templates.main') --}}
 @section('title') Dashboard @endsection
 @section('style')@endsection
@@ -71,27 +71,50 @@ $role = Auth::user()->role;
                             <td>{{ $item->diaudit }}</td>
                             <td>{{ $item->auditor }}</td>
                             <td>
-                                <?php if ($item->manajer == "0"){  ?>
-                                    <form method="POST" action="/StatusManajer/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
-                                        @method("POST")
-                                        @csrf
-                                            <button type="submit" class="btn btn-danger">Reject</button>
-                                        </form>
+                                @if ($role == '2')
+                                {{-- <button type="button" class="btn btn-secondary">Waiting</button> --}}
+                                    <?php if ($item->manajer == "0"){  ?>
+                                        <button type="button" class="btn btn-danger">Reject</button>
                                     <?php }elseif ($item->manajer == NULL ){  ?>
-                                            <form method="POST" action="/StatusManajer/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
+                                            <button type="button" class="btn btn-secondary">Waiting</button>
+                                    <?php }else {  ?>
+                                                <button type="button" class="btn btn-success">Accept</button>
+                                    <?php
+                                    }
+                                    ?>
+                                @elseif($role == '3')
+                                    <?php if ($item->manajer == "0"){  ?>
+                                        <button type="button" class="btn btn-danger">Reject</button>
+                                    <?php }elseif ($item->manajer == NULL ){  ?>
+                                            <button type="button" class="btn btn-secondary">Waiting</button>
+                                    <?php }else {  ?>
+                                                <button type="button" class="btn btn-success">Accept</button>
+                                    <?php
+                                    }
+                                    ?>
+                                @else
+                                    <?php if ($item->manajer == "0"){  ?>
+                                        <form method="POST" action="/StatusManajer/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
                                             @method("POST")
                                             @csrf
-                                                <button type="submit" class="btn btn-secondary">Waiting</button>
+                                                <button type="submit" class="btn btn-danger">Reject</button>
                                             </form>
-                                        <?php }else {  ?>
-                                            <form method="POST" action="/StatusManajer/{{$item->id}}/0" class="form-horizontal" >
+                                        <?php }elseif ($item->manajer == NULL ){  ?>
+                                                <form method="POST" action="/StatusManajer/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
                                                 @method("POST")
                                                 @csrf
-                                                    <button type="submit" class="btn btn-success">Accept</button>
-                                            </form>
-                                        <?php
-                                        }
-                                        ?>
+                                                    <button type="submit" class="btn btn-secondary">Waiting</button>
+                                                </form>
+                                            <?php }else {  ?>
+                                                <form method="POST" action="/StatusManajer/{{$item->id}}/0" class="form-horizontal" >
+                                                    @method("POST")
+                                                    @csrf
+                                                        <button type="submit" class="btn btn-success">Accept</button>
+                                                </form>
+                                            <?php
+                                            }
+                                            ?>
+                                @endif
                             </td>
                             <td>
                                 @if ($role == '2')
@@ -139,7 +162,7 @@ $role = Auth::user()->role;
                                             ?>
                                 @endif
                             </td>
-                            <td>
+                            <td style="width: 20%" >
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Lihat Detail</button>
                                 <a href="/AuditSumary/{{$item->id}}" class="btn btn-primary">Audit</a>
                             </td>

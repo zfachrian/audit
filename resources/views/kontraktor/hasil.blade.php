@@ -1,16 +1,18 @@
 <?php
 $nav = "admin.templates.main";
+$role = Auth::user()->role;
 ?>
-@if ({{ Auth::user()->role }} == 1)
-    <?php $nav = "admin.templates.main"; ?>
-@elseif({{ Auth::user()->role }} == 4)
-    <?php $nav = "admin.templates.main"; ?>
-@elseif({{ Auth::user()->role }} == 5)
-    <?php $nav = "admin.templates.main"; ?>
-@else
-    <?php $nav = "auditor.templates.main"; ?>
-@endif
-@extends('{{$nav}}')
+// @if ($role == '1')
+//     <?php $nav = "admin.templates.main" ?>
+// @elseif($role == '4')
+//     <?php $nav = "admin.templates.main" ?>
+// @elseif($role == '5')
+//     <?php $nav = "admin.templates.main" ?>
+// @else
+//     <?php $nav = "auditor.templates.main" ?>
+// @endif
+@extends("admin.templates.main")
+{{-- @extends('admin.templates.main') --}}
 @section('title') Dashboard @endsection
 @section('style')@endsection
 @section('script')@endsection
@@ -22,7 +24,7 @@ $nav = "admin.templates.main";
             <div class="card-header">
             <h3 class="card-title">Data {{ $title }}</h3>
                 <div class="float-right">
-                    <a href="{{ route('audit.create') }}" class="btn btn-success">Tambah {{ $title }}</a>
+                    {{-- <a href="{{ route('audit.create') }}" class="btn btn-success">Tambah {{ $title }}</a> --}}
                     <!-- add modal -->
                     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Auditor</button> --}}
                 </div>
@@ -58,7 +60,6 @@ $nav = "admin.templates.main";
                             <th>Acc Manajer</th>
                             <th>Acc Supervisor</th>
                             <th>Audit</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,59 +70,101 @@ $nav = "admin.templates.main";
                             <td>{{ $item->diaudit }}</td>
                             <td>{{ $item->auditor }}</td>
                             <td>
-                                <?php if ($item->manajer == "0"){  ?>
-                                            <button type="submit" class="btn btn-danger">Reject</button>
+                                @if ($role == '2')
+                                {{-- <button type="button" class="btn btn-secondary">Waiting</button> --}}
+                                    <?php if ($item->manajer == "0"){  ?>
+                                        <button type="button" class="btn btn-danger">Reject</button>
                                     <?php }elseif ($item->manajer == NULL ){  ?>
-                                                <button type="submit" class="btn btn-secondary">Waiting</button>
-                                        <?php }else {  ?>
-                                                    <button type="submit" class="btn btn-success">Accept</button>
-                                                <?php
-                                                }
-                                                ?>
-                            </td>
-                            <td>
-                                <?php if ($item->supervisor == "0"){  ?>
-                                            <button type="submit" class="btn btn-danger">Reject</button>
-                                    <?php }elseif ($item->supervisor == NULL ){  ?>
-                                                <button type="submit" class="btn btn-secondary">Waiting</button>
-                                        <?php }else {  ?>
-                                                    <button type="submit" class="btn btn-success">Accept</button>
+                                            <button type="button" class="btn btn-secondary">Waiting</button>
+                                    <?php }else {  ?>
+                                                <button type="button" class="btn btn-success">Accept</button>
+                                    <?php
+                                    }
+                                    ?>
+                                @elseif($role == '3')
+                                    <?php if ($item->manajer == "0"){  ?>
+                                        <button type="button" class="btn btn-danger">Reject</button>
+                                    <?php }elseif ($item->manajer == NULL ){  ?>
+                                            <button type="button" class="btn btn-secondary">Waiting</button>
+                                    <?php }else {  ?>
+                                                <button type="button" class="btn btn-success">Accept</button>
+                                    <?php
+                                    }
+                                    ?>
+                                @else
+                                    <?php if ($item->manajer == "0"){  ?>
+                                        <form method="POST" action="/StatusManajer/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
+                                            @method("POST")
+                                            @csrf
+                                                <button type="submit" class="btn btn-danger">Reject</button>
+                                            </form>
+                                        <?php }elseif ($item->manajer == NULL ){  ?>
+                                                <form method="POST" action="/StatusManajer/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
+                                                @method("POST")
+                                                @csrf
+                                                    <button type="submit" class="btn btn-secondary">Waiting</button>
+                                                </form>
+                                            <?php }else {  ?>
+                                                <form method="POST" action="/StatusManajer/{{$item->id}}/0" class="form-horizontal" >
+                                                    @method("POST")
+                                                    @csrf
+                                                        <button type="submit" class="btn btn-success">Accept</button>
+                                                </form>
                                             <?php
                                             }
                                             ?>
+                                @endif
                             </td>
                             <td>
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Lihat Detail</button>
-                                <a href="/AuditSumary/{{$item->id}}" class="btn btn-primary">Audit</a>
+                                @if ($role == '2')
+                                {{-- <button type="button" class="btn btn-secondary">Waiting</button> --}}
+                                    <?php if ($item->supervisor == "0"){  ?>
+                                        <button type="button" class="btn btn-danger">Reject</button>
+                                    <?php }elseif ($item->supervisor == NULL ){  ?>
+                                            <button type="button" class="btn btn-secondary">Waiting</button>
+                                    <?php }else {  ?>
+                                                <button type="button" class="btn btn-success">Accept</button>
+                                    <?php
+                                    }
+                                    ?>
+                                @elseif($role == '3')
+                                    <?php if ($item->supervisor == "0"){  ?>
+                                        <button type="button" class="btn btn-danger">Reject</button>
+                                    <?php }elseif ($item->supervisor == NULL ){  ?>
+                                            <button type="button" class="btn btn-secondary">Waiting</button>
+                                    <?php }else {  ?>
+                                                <button type="button" class="btn btn-success">Accept</button>
+                                    <?php
+                                    }
+                                    ?>
+                                @else
+                                    <?php if ($item->supervisor == "0"){  ?>
+                                        <form method="POST" action="/StatusSupervisor/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
+                                            @method("POST")
+                                            @csrf
+                                                <button type="submit" class="btn btn-danger">Reject</button>
+                                            </form>
+                                        <?php }elseif ($item->supervisor == NULL ){  ?>
+                                                <form method="POST" action="/StatusSupervisor/{{$item->id}}/{{ Auth::user()->id }}" class="form-horizontal" >
+                                                @method("POST")
+                                                @csrf
+                                                    <button type="submit" class="btn btn-secondary">Waiting</button>
+                                                </form>
+                                            <?php }else {  ?>
+                                                <form method="POST" action="/StatusSupervisor/{{$item->id}}/0" class="form-horizontal" >
+                                                    @method("POST")
+                                                    @csrf
+                                                        <button type="submit" class="btn btn-success">Accept</button>
+                                                </form>
+                                            <?php
+                                            }
+                                            ?>
+                                @endif
                             </td>
-                            <td style="width: 15%">
-                                <a href="{{ route('audit.edit', $item->id ) }}" class="btn btn-success">Edit</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-delete-modal-lg{{$item->id}}">Delete</button>
-
-
-                                <!-- delete modal -->
-                                <div class="modal fade bd-delete-modal-lg{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Delete Auditor</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                                <div class="modal-body">
-                                                    <h5> Apakah anda yakin untuk menghapus data audit perusahaan "{{$item->diaudit}}" ?</h5>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <form method="post" action="{{ route('audit.destroy', $item->id ) }}" class="d-inline">
-                                                        @method('delete') @csrf
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </form>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <td style="width: 25%" >
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Lihat Detail</button>
+                                <a href="/hasilNilai/{{$item->id}}" class="btn btn-primary">Hasil Audit</a>
+                            </td>
 
                                 {{-- detail modal --}}
                                 <div class="modal fade bd-detail-modal-lg{{$item->id}}" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -171,23 +214,9 @@ $nav = "admin.templates.main";
                                     </div>
                                     </div>
                                 </div>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
-                    {{-- <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Jenis Audit</th>
-                            <th>Perusahaan di audit</th>
-                            <th>Jenis Usaha</th>
-                            <th>Lingkup Audit</th>
-                            <th>Tgl. Audit</th>
-                            <th>Tujuan Audit</th>
-                            <th>Auditor</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot> --}}
                 </table>
             </div>
         </div><!-- /.card -->

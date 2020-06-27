@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Model\JenisAudit;
 
-class AdminController extends Controller
+class SupervisorController extends Controller
 {
         /**
      * Show the application dashboard.

@@ -36,6 +36,23 @@ class AuditController extends Controller
         return view('admin.audit.index', compact('title', 'data', 'diaudit'));
     }
 
+    public function hasilAudit($id)
+    {
+        $title  = "Data Audit";
+        $data   = Audit::get();
+        // echo json_encode($data);die();
+
+        $diaudit  = Audit::select('audit.*', 'a.name as diaudit', 'a2.name as auditor', 'b.jenis_audit as jenis_audit'  )
+                        ->join('users as a', 'audit.diaudit', '=', 'a.id')
+                        ->join('users as a2', 'audit.auditor', '=', 'a2.id')
+                        ->join('jenis_audit as b', 'audit.jenis_id', '=', 'b.id')
+                        ->where('audit.diaudit', '=', $id)
+                        ->get();
+
+        // dd($diaudit);
+        return view('kontraktor.hasil', compact('title', 'data', 'diaudit'));
+    }
+
     public function audit($id)
     {
         $title = "Audit - List Kategori Audit";
@@ -91,6 +108,64 @@ class AuditController extends Controller
         // dd($data_kategori_collection);
 
         return view('admin.audit.sumary', compact('title', 'data', 'data_kategori_collection', 'id'));
+    }
+    
+    //nilai kontraktor
+    public function hasilNilai($id)
+    {
+        $title = "Audit - List Kategori Audit";
+        $data = Audit::find($id);
+        // dd($data);
+
+        $kategori = KategoriNilai::select('*', 'soal.id as kat_id')
+                                ->join('kategori_soal as soal', 'kategori_nilai.kategori_id', '=', 'soal.id')
+                                ->join('jenis_audit as jenis', 'soal.jenis_id', '=', 'jenis.id')
+                                ->where('audit_id', '=', $id)
+                                ->get();
+
+        if(count($kategori) < 1){
+        //    echo "kosong";
+           $kategori = kategori::select('*', 'kategori_soal.id as kat_id')
+                                ->JOIN('jenis_audit as jenis', 'kategori_soal.jenis_id', '=', 'jenis.id')
+                                ->where('kategori_soal.jenis_id', '=', $data->jenis_id)
+                                ->get();
+        }else{
+            $kategori = kategori::select('*', 'kategori_soal.id as kat_id')
+                            ->LEFTJOIN('jenis_audit as jenis', 'kategori_soal.jenis_id', '=', 'jenis.id')
+                            ->where('kategori_soal.jenis_id', '=', $data->jenis_id, 'AND', 'kategori_nilai.audit_id', '=', $id)
+                            ->get();
+        }
+        // $kon = Kategori::where('jenis_id', $id)->get();
+        // dd($kategori);
+
+        $data_kategori_collection = array();
+        $i = 0;
+        foreach ($kategori as $item){
+            $kategori_soal_id = $item->kat_id;
+            $kategori_soal = $item->kategoriSoal;
+            $data_kategori_collection[$i]['id'] = $kategori_soal_id;
+            $data_kategori_collection[$i]['soal'] = $kategori_soal;
+
+            $kategori_nilai = DB::table('kategori_nilai')
+                            ->where('audit_id', '=', $id)
+                            ->where('kategori_id', '=', $kategori_soal_id)
+                            ->get();
+
+            $data_kategori_collection[$i]['total_diperiksa'] = 0;
+            $data_kategori_collection[$i]['total_tdksesuai'] = 0;
+            $data_kategori_collection[$i]['total_persentase'] = 0;
+            if(sizeof($kategori_nilai) != 0){
+                $data_kategori_collection[$i]['total_diperiksa'] = $kategori_nilai[0]->total_diperiksa;
+                $data_kategori_collection[$i]['total_tdksesuai'] = $kategori_nilai[0]->total_tdksesuai;
+                $data_kategori_collection[$i]['total_persentase'] = $kategori_nilai[0]->total_persentase;
+            }
+
+            $i++;
+        }
+
+        // dd($data_kategori_collection);
+
+        return view('kontraktor.sumary', compact('title', 'data', 'data_kategori_collection', 'id'));
     }
 
     public function soal($kategori, $audit_id)

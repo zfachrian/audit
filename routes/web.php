@@ -33,6 +33,8 @@ Route::get('/userManajer', 'UserController@manajer');
 Route::get('/userSupervisor', 'UserController@supervisor');
 
 Route::resource('/audit', 'AuditController');
+Route::get('/hasil/{id}', 'AuditController@hasilAudit');
+Route::get('/hasilNilai/{id}', 'AuditController@hasilNilai');
 Route::get('/AuditSumary/{id}', 'AuditController@audit');
 // Route::get('/AuditSumary/{id}/edit', 'AuditController@auditEdit');
 Route::get('/AuditKategori/{kategori}/{audit_id}/edit', 'AuditController@editSoal');

@@ -2,18 +2,21 @@
 @section('title') Dashboard @endsection
 @section('style')@endsection
 @section('script')
-<script>
-		// var table = document.getElementById("nilai"), sumHsl = 0;
-        // parseFloat()
-		// {
-		// 	a = parseInt(table.rows[1].cells[2].innerHTML);
-		// 	b = parseInt(table.rows[1].cells[2].innerHTML);
+@foreach ($data_kategori_collection as $item)
+<script type="text/javascript">
+    //total persen
+    let persentaseCount = 0;
+    let persentaseAmount = 0;
+    let total = 0;
+    $('.persentase-input').each(function(){
+        persentaseCount++;
+        persentaseAmount += parseFloat($(this).val());
+    });
 
-		// 	sumHsl = a + b;
-		// }
-		// document.getElementById("hasil").innerHTML = sumHsl;
-
+    total = persentaseAmount/persentaseCount;
+    $('.total-persen').val(total);
 </script>
+@endforeach
 @endsection
 
 
@@ -71,9 +74,6 @@
                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
                                             Kepatuhan(%)
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                                            Action
-                                        </th>
                                     </tr>
                                 </thead>
 
@@ -84,13 +84,9 @@
                                                 <td>{{$item['soal']}}</td>
                                                 <td>{{$item['total_diperiksa']}}</td>
                                                 <td>{{$item['total_tdksesuai']}}</td>
-                                                <td id="hasil">{{$item['total_persentase']}}</td>
-                                                <td>
-                                                    @if($item['total_diperiksa'] == NULL)
-                                                        <a href="/AuditKategori/{{$item['id']}}/{{$id}}" class="btn btn-primary">Audit Kategori</a>
-                                                    @else
-                                                        <a href="/AuditKategori/{{$item['id']}}/{{$id}}/edit" class="btn btn-primary">Audit Kategori</a>
-                                                    @endif
+                                                <td id="hasil">
+                                                    <input readonly name="persentase[{{$loop->iteration}}]" id="persen{{$loop->iteration}}" value="{{$item['total_persentase']}}" class="persentase-input" >
+                                                    {{-- {{$item['total_persentase']}} --}}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -98,7 +94,7 @@
                                 <tfoot>
                                     <tr>
                                         <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>
-                                        <th rowspan="1" colspan="2">60% (Good)</th>
+                                        <th rowspan="1" colspan="2"><input type="number" id="totalPersen" readonly value="0" class="total-persen" />%</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -107,7 +103,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a class="btn btn-dark" href="/audit">Back</a>
+                <a class="btn btn-dark" href="{{ url()->previous() }}">Back</a>
                 {{-- <button type="submit" class="btn btn-info float-right">Submit</button> --}}
             </div>
         </div><!-- /.card -->

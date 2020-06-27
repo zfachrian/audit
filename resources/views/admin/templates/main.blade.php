@@ -57,7 +57,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link">
+            <a href="/home" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
               Dashboard
@@ -65,7 +65,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Menu
@@ -73,7 +73,18 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
+          <?php
+          $role = Auth::user()->role;
+          $display = "display:none;"
+          ?>
+          @if ($role == 2)
+            <?php $display = "display:none;" ?>
+          @elseif($role == 3)
+            <?php $display = "display:none;" ?>
+          @else
+            <?php $display = " " ?>   
+          @endif
+          <li class="nav-item has-treeview" style={{$display}} >
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
@@ -124,24 +135,34 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+               @if ($role == 3)
+                  <?php $display = "display:none;" ?>
+                @else
+                  <?php $display = " " ?>   
+                @endif
               <li class="nav-item">
-                <a href="/audit" class="nav-link">
+                <a href="/audit" class="nav-link" style={{$display}}>
                   <i class="far fa-circle nav-icon"></i>
                   <p>Audit</p>
                 </a>
               </li>
+                @if ($role == 3)
+                  <?php $display = " " ?>  
+                @else
+                  <?php $display = "display:none;" ?> 
+                @endif
               <li class="nav-item">
-                <a href="/Audit" class="nav-link">
+                <a href="/hasil/{{Auth::user()->id}}" class="nav-link" style={{$display}}>
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Histori Audit</p>
+                  <p>Hasil Audit</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="../forms/advanced.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Jadwal</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li>
 
