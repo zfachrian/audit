@@ -25,21 +25,25 @@ Route::get('/supervisor', 'Users\SupervisorController@index')->name('supervisor'
 
 Route::get('/home', 'Users\AdminController@index')->name('home');
 
-Route::resource('user', 'UserController')->except(['create']);
-Route::get('/user/create/{role}', 'UserController@create');
-Route::get('/userAuditor', 'UserController@auditor');
-Route::get('/userKontraktor', 'UserController@kontraktor');
-Route::get('/userManajer', 'UserController@manajer');
-Route::get('/userSupervisor', 'UserController@supervisor');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('user', 'UserController')->except(['create']);
+    Route::get('/user/create/{role}', 'UserController@create');
+    Route::get('/userAuditor', 'UserController@auditor');
+    Route::get('/userKontraktor', 'UserController@kontraktor');
+    Route::get('/userManajer', 'UserController@manajer');
+    Route::get('/userSupervisor', 'UserController@supervisor');
 
-Route::resource('/audit', 'AuditController');
-Route::get('/hasil/{id}', 'AuditController@hasilAudit');
-Route::get('/hasilNilai/{id}', 'AuditController@hasilNilai');
-Route::get('/AuditSumary/{id}', 'AuditController@audit');
-// Route::get('/AuditSumary/{id}/edit', 'AuditController@auditEdit');
-Route::get('/AuditKategori/{kategori}/{audit_id}/edit', 'AuditController@editSoal');
-Route::get('/AuditKategori/{kategori}/{audit_id}', 'AuditController@soal');
-Route::post('/SubmitSoal/{soal}', 'AuditController@storeSoal');
-Route::post('/SubmitSoal/{soal}/{katNilai}', 'AuditController@storeEditSoal');
-Route::post('/StatusManajer/{id_manajer}/{manajer}', 'AuditController@updateStatusManajer');
-Route::post('/StatusSupervisor/{id_supervisor}/{supervisor}', 'AuditController@updateStatusSupervisor');
+    Route::resource('/audit', 'AuditController');
+    Route::get('/hasil/{id}', 'AuditController@hasilAudit');
+    Route::get('/hasilNilai/{id}', 'AuditController@hasilNilai');
+    Route::get('/AuditSumary/{id}', 'AuditController@audit');
+    // Route::get('/AuditSumary/{id}/edit', 'AuditController@auditEdit');
+    Route::get('/AuditKategori/{kategori}/{audit_id}/edit', 'AuditController@editSoal');
+    Route::get('/AuditKategori/{kategori}/{audit_id}', 'AuditController@soal');
+    Route::post('/SubmitSoal/{soal}', 'AuditController@storeSoal');
+    Route::post('/SubmitSoal/{soal}/{katNilai}', 'AuditController@storeEditSoal');
+    Route::post('/StatusManajer/{id_manajer}/{manajer}', 'AuditController@updateStatusManajer');
+    Route::post('/StatusSupervisor/{id_supervisor}/{supervisor}', 'AuditController@updateStatusSupervisor');
+});
+
+
