@@ -82,7 +82,7 @@
           @elseif($role == 3)
             <?php $display = "display:none;" ?>
           @else
-            <?php $display = " " ?>   
+            <?php $display = " " ?>
           @endif
           <li class="nav-item has-treeview" style={{$display}} >
             <a href="#" class="nav-link">
@@ -128,7 +128,7 @@
           </li>
           <li class="nav-item has-treeview menu">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fas fa-tasks"></i>
               <p>
                 Audit Menu
                 <i class="fas fa-angle-left right"></i>
@@ -138,7 +138,7 @@
                @if ($role == 3)
                   <?php $display = "display:none;" ?>
                 @else
-                  <?php $display = " " ?>   
+                  <?php $display = " " ?>
                 @endif
               <li class="nav-item">
                 <a href="/audit" class="nav-link" style={{$display}}>
@@ -147,9 +147,9 @@
                 </a>
               </li>
                 @if ($role == 3)
-                  <?php $display = " " ?>  
+                  <?php $display = " " ?>
                 @else
-                  <?php $display = "display:none;" ?> 
+                  <?php $display = "display:none;" ?>
                 @endif
               <li class="nav-item">
                 <a href="/hasil/{{Auth::user()->id}}" class="nav-link" style={{$display}}>
@@ -165,6 +165,43 @@
               </li> --}}
             </ul>
           </li>
+            {{-- display logic --}}
+            </li>
+            <?php
+            $role = Auth::user()->role;
+            $display = "display:none;"
+            ?>
+            @if ($role == 2)
+            <?php $display = "display:none;" ?>
+            @elseif($role == 3)
+            <?php $display = "display:none;" ?>
+            @else
+            <?php $display = " " ?>
+            @endif
+            {{-- end of display logic --}}
+          <li class="nav-item has-treeview menu" style={{$display}}>
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manajemen Soal
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/KategoriWIP" class="nav-link" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Soal WIP</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/KategoriPTW" class="nav-link" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Soal PTW</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
           <li class="nav-header"></li>
           <li class="nav-item">
@@ -177,7 +214,7 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-          </li>        
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

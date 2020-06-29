@@ -44,6 +44,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/SubmitSoal/{soal}/{katNilai}', 'AuditController@storeEditSoal');
     Route::post('/StatusManajer/{id_manajer}/{manajer}', 'AuditController@updateStatusManajer');
     Route::post('/StatusSupervisor/{id_supervisor}/{supervisor}', 'AuditController@updateStatusSupervisor');
+
+    Route::resource('/KategoriWIP', 'KategoriWIPController');
+    Route::resource('/KategoriPTW', 'KategoriPTWController');
+    Route::resource('/SoalWIP', 'SoalWIPController');
+    // Route::resource('/SoalPTW', 'SoalPTWController');
 });
 
 
