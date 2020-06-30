@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Kategori;
 
 use Illuminate\Http\Request;
 
@@ -13,17 +14,10 @@ class KategoriPTWController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $title  = "Data Kategori";
+        $kategori = Kategori::where('jenis_id', '2')->get();
+        $id_jenis = 2;
+        return view('admin.kategori.indexPTW', compact('title', 'kategori', 'id_jenis'));
     }
 
     /**
@@ -34,29 +28,16 @@ class KategoriPTWController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'kategoriSoal'              =>'required'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        Kategori::create([
+            'jenis_id'        => $request->id_jenis,
+            'kategoriSoal'    => $request->kategoriSoal
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return redirect('/KategoriPTW')->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -68,7 +49,16 @@ class KategoriPTWController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'kategoriSoal'              =>'required'
+        ]);
+
+        kategori::where('id', $id)->Update([
+            'jenis_id'        => $request->id_jenis,
+            'kategoriSoal'    => $request->kategoriSoal
+        ]);
+
+        return redirect('/KategoriPTW')->with('success', 'Data berhasil diubah!');
     }
 
     /**
@@ -79,6 +69,7 @@ class KategoriPTWController extends Controller
      */
     public function destroy($id)
     {
-        //
+        kategori::destroy($id);
+        return redirect('/KategoriPTW')->with('danger', 'Data Berhasil Dihapus');
     }
 }

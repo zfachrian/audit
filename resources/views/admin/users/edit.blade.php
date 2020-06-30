@@ -93,7 +93,7 @@
                         <input type="text" class="form-control" id="role_auditor" name="role_auditor" value="{{ $user->role }}">
                     </div>
                 </div>
-               
+
             </div>
             <!-- /.card-body -->
         </form>

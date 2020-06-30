@@ -76,7 +76,7 @@ $role = Auth::user()->role;
                                                     <h5> Apakah anda yakin untuk menghapus data kategori "{{$item->topik}}" ?</h5>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form method="post" action="{{ route('SoalWIP.destroy', $item->id ) }}" class="d-inline">
+                                                    <form method="post" action="{{ route('SoalPTW.destroy', $item->id ) }}" class="d-inline">
                                                         @method('delete') @csrf
                                                         <button type="submit" class="btn btn-danger">Delete</button>
                                                     </form>
@@ -97,7 +97,7 @@ $role = Auth::user()->role;
                                                 </button>
                                             </div>
                                             <!-- form start -->
-                                            <form method="POST" action="{{ route('SoalWIP.store') }}" class="form-horizontal" enctype="multipart/form-data">
+                                            <form method="POST" action="{{ route('SoalPTW.store') }}" class="form-horizontal" enctype="multipart/form-data">
                                                 @method("POST")
                                                 @csrf
                                                 <div class="modal-body">
@@ -134,7 +134,7 @@ $role = Auth::user()->role;
                                                 </button>
                                             </div>
                                             <!-- form start -->
-                                            <form method="POST" action="{{ route('SoalWIP.update', $item->id) }}" class="form-horizontal" enctype="multipart/form-data">
+                                            <form method="POST" action="{{ route('SoalPTW.update', $item->id) }}" class="form-horizontal" enctype="multipart/form-data">
                                                 @method("PUT")
                                                 @csrf
                                                 <div class="modal-body">

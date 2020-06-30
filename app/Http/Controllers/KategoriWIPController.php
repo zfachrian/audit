@@ -37,7 +37,7 @@ class KategoriWIPController extends Controller
             'kategoriSoal'    => $request->kategoriSoal
         ]);
 
-        return redirect('/KategoriWIP')->with('success', 'Data berhasil ditambahkan!');
+        return redirect('/KategoriPTW')->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -57,6 +57,8 @@ class KategoriWIPController extends Controller
             'jenis_id'        => $request->id_jenis,
             'kategoriSoal'    => $request->kategoriSoal
         ]);
+
+        return redirect('/KategoriPTW')->with('success', 'Data berhasil diubah!');
     }
 
     /**
@@ -68,6 +70,6 @@ class KategoriWIPController extends Controller
     public function destroy($id)
     {
         kategori::destroy($id);
-        return redirect('/KategoriWIP')->with('danger', 'Data Berhasil Dihapus');
+        return redirect('/KategoriPTW')->with('danger', 'Data Berhasil Dihapus');
     }
 }

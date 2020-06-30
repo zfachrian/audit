@@ -47,7 +47,9 @@ class SoalWIPController extends Controller
             'topik'           => $request->soal
         ]);
 
-        $url = url()->current();
+        $kategori_id = $request->kategori_id;
+        $link = "/SoalWIP/";
+        $url = $link.$kategori_id;
         return redirect($url)->with('success', 'Data Berhasil ditambahkan !');
     }
 
@@ -97,7 +99,9 @@ class SoalWIPController extends Controller
             'topik'           => $request->soal
         ]);
 
-        $url = url()->current();
+        $kategori_id = $request->kategori_id;
+        $link = "/SoalWIP/";
+        $url = $link.$kategori_id;
         return redirect($url)->with('success', 'Data Berhasil diupdate');
     }
 
@@ -109,10 +113,14 @@ class SoalWIPController extends Controller
      */
     public function destroy($id)
     {
-        // echo $url;die();
+        //link
+        $kategori = soal::where('id', $id)->get();
+        $kategori_id = $kategori['0']['kategori_id'];
+        $link = "/SoalWIP/";
+        $url = $link.$kategori_id;
+        //delete
         Soal::destroy($id);
-
-        $url = url()->current();
+        // dd($url);
         return redirect($url)->with('danger', 'Data Berhasil Dihapus');
     }
 }
