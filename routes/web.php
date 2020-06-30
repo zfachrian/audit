@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/KategoriWIP', 'KategoriWIPController');
     Route::resource('/KategoriPTW', 'KategoriPTWController');
     Route::resource('/SoalWIP', 'SoalWIPController');
-    // Route::resource('/SoalPTW', 'SoalPTWController');
+    Route::resource('/SoalPTW', 'SoalPTWController');
 });
 
 

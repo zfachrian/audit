@@ -60,7 +60,7 @@ $role = Auth::user()->role;
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-delete-modal-lg{{$item->id}}">Delete</button>
                             </td>
                             <td style="width: 10%">
-                                <a href="/SoalWIP/{{$item->id}}" class="btn btn-primary">Tambah Soal</a>
+                                <a href="/SoalPTW/{{$item->id}}" class="btn btn-primary">Tambah Soal</a>
                             </td>
 
                                 <!-- delete modal -->
