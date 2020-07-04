@@ -22,16 +22,17 @@ class AuditTindakanController extends Controller
                             ->JOIN('jenis_audit as jenis', 'kategori_soal.jenis_id', '=', 'jenis.id')
                             ->where('kategori_soal.jenis_id', '=', $audit->jenis_id)
                             ->get();
-        $tindakan = tindakan::where('audit_id', '=', 1)->get();
+        $tindakan = tindakan::where('audit_id', '=', $id)->get();
+        
         $statusTindakan = '';
-        if(empty($tindakan)){
+        if(sizeof($tindakan) == 0){
             $statusTindakan = 'false';
         }else{
             $statusTindakan = 'true';
         }
         
-        dd($statusTindakan);
-        return view('admin.audit.tindakan', compact('title', 'kategori', 'audit'));
+        // dd($statusTindakan);
+        return view('admin.audit.tindakan', compact('title', 'kategori', 'audit', 'statusTindakan'));
     }
 
     /**
