@@ -54,8 +54,9 @@ $role = Auth::user()->role;
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Jenis Audit</th>
                             <th>Tgl. Audit</th>
-                            <th>Perusahaan di audit</th>
+                            <th>Kontraktor</th>
                             <th>Auditor</th>
                             <th>Acc Manajer</th>
                             <th>Acc Supervisor</th>
@@ -67,6 +68,7 @@ $role = Auth::user()->role;
                         @foreach ($diaudit as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->jenis_audit }}</td>
                             <td>{{ $item->jadwal }}</td>
                             <td>{{ $item->diaudit }}</td>
                             <td>{{ $item->auditor }}</td>
@@ -162,9 +164,10 @@ $role = Auth::user()->role;
                                             ?>
                                 @endif
                             </td>
-                            <td style="width: 20%" >
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Lihat Detail</button>
+                            <td style="width: 25%" >
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Detail</button>
                                 <a href="/AuditSumary/{{$item->id}}" class="btn btn-primary">Audit</a>
+                                <a href="/AuditTindakan/{{$item->id}}" class="btn btn-warning">Tindakan</a>
                             </td>
                             <td style="width: 15%">
                                 <a href="{{ route('audit.edit', $item->id ) }}" class="btn btn-success">Edit</a>

@@ -40,11 +40,18 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/AuditSumary/{id}/edit', 'AuditController@auditEdit');
     Route::get('/AuditKategori/{kategori}/{audit_id}/edit', 'AuditController@editSoal');
     Route::get('/AuditKategori/{kategori}/{audit_id}', 'AuditController@soal');
+
+    //soal nilai dan input
     Route::post('/SubmitSoal/{soal}', 'AuditController@storeSoal');
     Route::post('/SubmitSoal/{soal}/{katNilai}', 'AuditController@storeEditSoal');
     Route::post('/StatusManajer/{id_manajer}/{manajer}', 'AuditController@updateStatusManajer');
     Route::post('/StatusSupervisor/{id_supervisor}/{supervisor}', 'AuditController@updateStatusSupervisor');
 
+    //tindakan
+    Route::get('/AuditTindakan/{id}', 'AuditTindakanController@index');
+    Route::post('/SubmitTindakan', 'AuditTindakanController@store');
+
+    //manajemen soal
     Route::resource('/KategoriWIP', 'KategoriWIPController');
     Route::resource('/KategoriPTW', 'KategoriPTWController');
     Route::resource('/SoalWIP', 'SoalWIPController');
