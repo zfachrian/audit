@@ -15,6 +15,22 @@
 
     total = persentaseAmount/persentaseCount;
     $('.total-persen').val(total);
+   
+    
+    var nilai_huruf;
+    if((total>95)&&(total<=100))
+    nilai_huruf = 'Very Satisfied';
+    else if((total>86)&&(total<=95))
+    nilai_huruf = 'Satisfied';
+    else if((total>76)&&(total<=85))
+    nilai_huruf = 'Average';
+    else if((total>56)&&(total<=75))
+    nilai_huruf = 'Poor';
+    else if((total>0)&&(total<=55))
+    nilai_huruf = 'Very Poor';
+    window.onload = function myFunction() {
+        document.getElementById("nilai-input").value = nilai_huruf;
+    }
 </script>
 @endforeach
 @endsection
@@ -104,7 +120,8 @@
                                 <tfoot>
                                     <tr>
                                         <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th>
-                                        <th rowspan="1" colspan="2"><input type="number" id="totalPersen" readonly value="0" class="total-persen" />%</th>
+                                        <th rowspan="1" colspan="1"><input type="number" id="totalPersen" readonly value="0" class="total-persen" />%</th>
+                                        <th rowspan="1" colspan="1"><input type="text" id="nilai-input" readonly value="0" class="nilai-input" /></th>
                                     </tr>
                                 </tfoot>
                             </table>
