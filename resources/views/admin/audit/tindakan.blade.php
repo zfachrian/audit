@@ -11,6 +11,7 @@
             <div class="card-header">
             <h3 class="card-title">Data {{ $title }}</h3>
                 <div class="float-right">
+                    <button class="btn btn-success" onclick="window.print()">Print this page</button>
                     {{-- <a href="/user/create/{{$role}}" class="btn btn-primary">Tambah {{ $title }}</a> --}}
                     <!-- add modal -->
                     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Auditor</button> --}}
