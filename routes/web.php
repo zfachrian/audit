@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
     //tindakan
     Route::get('/AuditTindakan/{id}', 'AuditTindakanController@index');
     Route::post('/SubmitTindakan', 'AuditTindakanController@store');
+    Route::post('/UpdateTindakan', 'AuditTindakanController@update');
 
     //manajemen soal
     Route::resource('/KategoriWIP', 'KategoriWIPController');
