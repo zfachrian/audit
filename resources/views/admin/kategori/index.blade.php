@@ -18,6 +18,42 @@ $role = Auth::user()->role;
                     <a href="{{ route('audit.create') }}" class="btn btn-success" data-toggle="modal" data-target="#tambahDataModal">Tambah {{ $title }} </a>
                     <!-- add modal -->
                     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-add-modal-lg">Add Auditor</button> --}}
+                    <!-- tambah data modal -->
+                    <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-dark" id="exampleModalCenterTitle" >Tambah Data Kategori</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <!-- form start -->
+                                <form method="POST" action="{{ route('KategoriWIP.store') }}" class="form-horizontal" enctype="multipart/form-data">
+                                    @method("POST")
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="card-body">
+                                            <div hidden class="form-group">
+                                                <label for="exampleInputPassword1">ID Jenis</label>
+                                                <input type="text" class="form-control" name="id_jenis" id="id_jenis" value="{{$id_jenis}}" placeholder="ID Jenis Audit">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1" class="text-dark">Nama Kategori Soal</label>
+                                                <input type="text" class="form-control" name="kategoriSoal" id="kategoriSoal" placeholder="Kategori Soal">
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-info float-right" value="submit">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Modal -->
                 </div>
             </div>
             <div class="card-body">
@@ -86,43 +122,6 @@ $role = Auth::user()->role;
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- tambah data modal -->
-                                <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Kategori</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <!-- form start -->
-                                            <form method="POST" action="{{ route('KategoriWIP.store') }}" class="form-horizontal" enctype="multipart/form-data">
-                                                @method("POST")
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <div class="card-body">
-                                                        <div hidden class="form-group">
-                                                            <label for="exampleInputPassword1">ID Jenis</label>
-                                                            <input type="text" class="form-control" name="id_jenis" id="id_jenis" value="{{$id_jenis}}" placeholder="ID Jenis Audit">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputPassword1">Nama Kategori Soal</label>
-                                                            <input type="text" class="form-control" name="kategoriSoal" id="kategoriSoal" placeholder="Kategori Soal">
-                                                        </div>
-                                                    </div>
-                                                    <!-- /.card-body -->
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-info float-right" value="submit">Simpan</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End of Modal -->
 
                                 <!-- edit data modal -->
                                 <div class="modal fade" id="editDataModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
