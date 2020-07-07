@@ -114,7 +114,6 @@
                                     <tfoot>
                                         <tr>
                                             {{-- <th rowspan="1" colspan="4">Nilai Kepatuhan Rata-rata</th> --}}
-                                            {{-- <th rowspan="1" colspan="2"><input  type="number" id="totalPersen" readonly value="0" class="total-persen" />%</th> --}}
                                         </tr>
                                     </tfoot>
                                 </table>
