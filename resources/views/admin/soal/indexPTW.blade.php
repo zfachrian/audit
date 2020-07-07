@@ -86,42 +86,7 @@ $role = Auth::user()->role;
                                     </div>
                                 </div>
 
-                                <!-- tambah data modal -->
-                                <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Data Kategori</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <!-- form start -->
-                                            <form method="POST" action="{{ route('SoalPTW.store') }}" class="form-horizontal" enctype="multipart/form-data">
-                                                @method("POST")
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <div class="card-body">
-                                                        <div hidden class="form-group">
-                                                            <label for="exampleInputPassword1">ID Kategori</label>
-                                                            <input type="text" class="form-control" name="kategori_id" id="kategori_id" value="{{$kategori_id}}" placeholder="ID Jenis Audit">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputPassword1">Soal</label>
-                                                            <input type="text" class="form-control" name="soal" id="soal" placeholder="Soal">
-                                                        </div>
-                                                    </div>
-                                                    <!-- /.card-body -->
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-info float-right" value="submit">Simpan</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End of Modal -->
+                                
 
                                 <!-- edit data modal -->
                                 <div class="modal fade" id="editDataModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

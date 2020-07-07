@@ -96,19 +96,13 @@
                                                         <input hidden type="number" class="form-control" name="kategori_id[{{$loop->iteration}}]" id="kategori_id{{$loop->iteration}}" value="{{$item['kategori_id']}}">
                                                     </td>
                                                     <td style="width: 30%" >
-                                                        <textarea type="textarea" class="form-control what-input" value="{{$item['what']}}" name="what[{{$loop->iteration}}]" id="what{{$loop->iteration}}"  placeholder="What (di isi oleh auditor)">
-                                                        {{$item['what']}}
-                                                        </textarea>
+                                                        <textarea type="textarea" class="form-control what-input"  name="what[{{$loop->iteration}}]" id="what{{$loop->iteration}}"  placeholder="What (di isi oleh auditor)">{{$item['what']}}</textarea>
                                                     </td>
                                                     <td>
-                                                        <textarea type="textarea" class="form-control" value="{{$item['action']}}" name="action[{{$loop->iteration}}]" id="action{{$loop->iteration}}"  placeholder="action (di isi oleh kontaktor)">
-                                                        {{$item['action']}}
-                                                        </textarea>
+                                                        <textarea type="textarea" class="form-control" name="action[{{$loop->iteration}}]" id="action{{$loop->iteration}}"  placeholder="action (di isi oleh kontaktor)">{{$item['action']}}</textarea>
                                                     </td>
                                                     <td >
-                                                        <textarea type="textarea" class="form-control" value="{{$item['who']}}" name="who[{{$loop->iteration}}]" id="who{{$loop->iteration}}"  placeholder="who (di isi oleh kontaktor)">
-                                                        {{$item['who']}}
-                                                        </textarea>
+                                                        <textarea type="textarea" class="form-control" value="{{$item['who']}}" name="who[{{$loop->iteration}}]" id="who{{$loop->iteration}}"  placeholder="who (di isi oleh kontaktor)">{{$item['who']}}</textarea>
                                                     </td>
                                                     <td >
                                                         <input type="date" class="form-control" value="{{$item['when']}}" name="when[{{$loop->iteration}}]" id="when{{$loop->iteration}}"  >
