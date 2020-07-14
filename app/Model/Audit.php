@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by.
+ * User: zfachrian (https://www.linkedin.com/in/zfachrian/)
+ * Date: 20-Jul-20
+ * Time: 11:24 PM
+ */
 
 namespace App\Model;
 
@@ -9,7 +15,7 @@ class Audit extends Model
     protected $table = 'audit';
 
     protected $fillable = [
-        'diaudit', 'lingkup_audit', 'jenis_usaha', 'tujuan', 'auditor', 'jadwal', 'jenis_id', 'manajer', 'supervisor'
+        'diaudit', 'no_permit', 'lingkup_audit', 'jenis_usaha', 'tujuan', 'auditor', 'jadwal', 'jenis_id', 'manajer', 'supervisor'
     ];
 
 

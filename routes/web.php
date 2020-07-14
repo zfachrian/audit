@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/userManajer', 'UserController@manajer');
     Route::get('/userSupervisor', 'UserController@supervisor');
 
+    //audit
     Route::resource('/audit', 'AuditController');
     Route::get('/hasil/{id}', 'AuditController@hasilAudit');
     Route::get('/hasilNilai/{id}', 'AuditController@hasilNilai');
@@ -40,6 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/AuditSumary/{id}/edit', 'AuditController@auditEdit');
     Route::get('/AuditKategori/{kategori}/{audit_id}/edit', 'AuditController@editSoal');
     Route::get('/AuditKategori/{kategori}/{audit_id}', 'AuditController@soal');
+    
+    //print detail
+    Route::get('/printDetail/{id}', 'AuditController@printDetail');
 
     //soal nilai dan input
     Route::post('/SubmitSoal/{soal}', 'AuditController@storeSoal');

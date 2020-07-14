@@ -1,52 +1,46 @@
 @extends('admin.templates.main')
 @section('title') Dashboard @endsection
 @section('style')@endsection
-@section('script')@endsection
-
 
 @section('content')
-    <div class="col-lg-12">
+@foreach ($diaudit as $audit)
+<div class="col-lg-12">
        <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Data {{$title}}</h3>
+              <h3 class="card-title">Data {{$title}} </h3>
+              <div class="float-right">
+                    <button class="btn btn-success" onclick="window.print()">Print this page</button>
+               </div>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="POST" action="{{ route('audit.store') }}" class="form-horizontal" enctype="multipart/form-data">
-                @method("POST")
+              <form method="POST" action="{{ route('audit.update', $audit->id) }}" class="form-horizontal" enctype="multipart/form-data">
+                @method("PUT")
                 @csrf
                 <div class="card-body">
-                  <div class="form-group">
+                 <div class="form-group">
                     <label for="exampleInputEmail1">Jenis Audit</label>
-                    <select class="custom-select" name="jenis" id="jenis">
-                      @foreach ($data as $item)
-                        <option value="{{ $item->id }}">{{ $item->jenis_audit }}</option>
-                      @endforeach
-                    </select>
-                  </div>
+                    <input disabled type="text" class="form-control" value="{{$audit->jenis_audit}}">
+                </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">No. Permit</label>
-                    <input type="text" class="form-control" name="permit" id="permit" placeholder="No Permit">
+                  <input disabled type="text" class="form-control" name="permit" id="permit" placeholder="No Permit" value="{{$audit->no_permit}}">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Perusahaan yang Diaudit</label>
-                    <select class="custom-select" name="diaudit" id="diaudit">
-                      @foreach ($user as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                      @endforeach   
-                    </select>
-                  </div>
+                    <input disabled type="text" class="form-control" value="{{$audit->diaudit}}">
+                </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Lingkup Audit</label>
-                    <input type="text" class="form-control" name="lingkup" id="lingkup" placeholder="Lingkup Audit">
+                  <input disabled type="text" class="form-control" name="lingkup" id="lingkup" placeholder="Lingkup Audit" value="{{$audit->lingkup_audit}}">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Jenis Usaha</label>
-                    <input type="text" class="form-control" name="jenis_usaha" id="jenis_usaha" placeholder="Lingkup Audit">
+                  <input disabled type="text" class="form-control" name="jenis_usaha" id="jenis_usaha" placeholder="Jenis Usaha" value="{{$audit->jenis_usaha}}">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Tujuan Audit</label>
-                    <input type="text" class="form-control" name="tujuan" id="tujuan" placeholder="Lingkup Audit">
+                  <input disabled type="text" class="form-control" name="tujuan" id="tujuan" placeholder="Tujuan Audit" value="{{$audit->tujuan}}">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Auditor</label>
@@ -55,7 +49,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Jadwal Audit</label>
-                    <input type="datetime-local" class="form-control" name="jadwal" id="jadwal" >
+                  <input disabled type="datetime-local" class="form-control" name="jadwal" id="jadwal" value='{{date_format(date_create($audit->jadwal),"Y-m-d\TH:i:s")}}'>
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -63,11 +57,10 @@
                 <div class="card-footer">
                   {{-- <a type="submit" class="btn btn-dark">Back</a> --}}
                   {{-- <a class="btn btn-info float-right" href="/AuditSumary">Mulai Audit</a> --}}
-                  <button type="submit" class="btn btn-info float-right" value="submit">Mulai Audit</button>
+                  {{-- <button type="submit" class="btn btn-info float-right" value="submit">Simpan Perubahan</button> --}}
                 </div>
               </form>
             </div>
     </div>
-
+    @endforeach
 @endsection
-

@@ -36,6 +36,23 @@ class AuditController extends Controller
         return view('admin.audit.index', compact('title', 'data', 'diaudit'));
     }
 
+    public function printDetail($id)
+    {
+        $title  = "Data Audit";
+        $data   = Audit::get();
+        // echo json_encode($data);die();
+
+        $diaudit  = Audit::select('audit.*', 'a.name as diaudit', 'a2.name as auditor', 'b.jenis_audit as jenis_audit'  )
+                        ->join('users as a', 'audit.diaudit', '=', 'a.id')
+                        ->join('users as a2', 'audit.auditor', '=', 'a2.id')
+                        ->join('jenis_audit as b', 'audit.jenis_id', '=', 'b.id')
+                        ->where('audit.id', '=', $id)
+                        ->get();
+
+        // dd($diaudit);
+        return view('admin.audit.printDetail', compact('title', 'data', 'diaudit'));
+    }
+
     public function hasilAudit($id)
     {
         $title  = "Data Audit";
@@ -359,6 +376,7 @@ public function storeSoal($soal, Request $request)
         audit::create([
             'jenis_id'        => $request->jenis,
             'diaudit'         => $request->diaudit,
+            'no_permit'       => $request->permit,
             'lingkup_audit'   => $request->lingkup,
             'jenis_usaha'     => $request->jenis_usaha,
             'tujuan'          => $request->tujuan,
@@ -420,6 +438,7 @@ public function storeSoal($soal, Request $request)
         audit::where('id', $audit->id)->Update([
                 'jenis_id'        => $request->jenis,
                 'diaudit'         => $request->diaudit,
+                'no_permit'       => $request->permit,
                 'lingkup_audit'   => $request->lingkup,
                 'jenis_usaha'     => $request->jenis_usaha,
                 'tujuan'          => $request->tujuan,

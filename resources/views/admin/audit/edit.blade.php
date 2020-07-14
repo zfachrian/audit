@@ -38,6 +38,10 @@
                     </select>
                   </div>
                   <div class="form-group">
+                    <label for="exampleInputPassword1">No. Permit</label>
+                  <input type="text" class="form-control" name="permit" id="permit" placeholder="No Permit" value="{{$audit->no_permit}}">
+                  </div>
+                  <div class="form-group">
                     <label for="exampleInputEmail1">Perusahaan yang Diaudit</label>
                     <select class="custom-select" name="diaudit" id="diaudit">
                       @foreach ($user as $item)

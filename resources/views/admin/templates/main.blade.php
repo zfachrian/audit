@@ -64,7 +64,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
@@ -72,14 +72,12 @@
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
-          </li>
+          </li> --}}
           <?php
           $role = Auth::user()->role;
           $display = "display:none;"
           ?>
-          @if ($role == 2)
-            <?php $display = "display:none;" ?>
-          @elseif($role == 3)
+          @if($role == 3)
             <?php $display = "display:none;" ?>
           @else
             <?php $display = " " ?>

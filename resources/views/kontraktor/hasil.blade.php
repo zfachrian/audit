@@ -161,7 +161,8 @@ $role = Auth::user()->role;
                                             ?>
                                 @endif
                             </td>
-                            <td style="width: 25%" >
+                            <td style="width: 35%" >
+                                <a href="/AuditTindakan/{{$item->id}}" class="btn btn-warning">Tindakan</a>
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-detail-modal-lg{{$item->id}}">Lihat Detail</button>
                                 <a href="/hasilNilai/{{$item->id}}" class="btn btn-primary">Hasil Audit</a>
                             </td>
